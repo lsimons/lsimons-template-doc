@@ -10,7 +10,7 @@ This template gives you a documentation site built with
 
 ## Prerequisites
 
-Tools are pinned in `mise.toml`. Install [mise](https://mise.jdx.dev/) once,
+Tools are pinned in `.mise.toml`. Install [mise](https://mise.jdx.dev/) once,
 then let it install the rest:
 
 ```bash
@@ -19,7 +19,7 @@ mise install
 
 This pins and installs `bun` (the site's package manager), `quarto` (slide
 decks), and the lint/hook tools (`prek`, `lychee`, `gitleaks`). Repo tasks are
-defined in `mise.toml` and run with `mise run <task>`.
+defined in `.mise.toml` and run with `mise run <task>`.
 
 ## Make it your own
 

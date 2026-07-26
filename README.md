@@ -38,7 +38,7 @@ under <https://lsimons.github.io/>.
   `docs/public/presentations/example.qmd`.
 - **GitHub Actions** - `ci.yml` builds and type-checks on push/PR; `deploy.yml`
   publishes to GitHub Pages on push to `main`.
-- **Pinned toolchain and tasks** in `mise.toml` (run with `mise run <task>`).
+- **Pinned toolchain and tasks** in `.mise.toml` (run with `mise run <task>`).
 - **Git hooks** (`prek.toml`) - mdformat, markdownlint, lychee, gitleaks, and
   commitlint.
 

@@ -10,7 +10,7 @@ in the repository root.
 
 ## The site
 
-Tools are pinned in `mise.toml`; run `mise install` once. Then:
+Tools are pinned in `.mise.toml`; run `mise install` once. Then:
 
 - `mise run docs-install` - install the site dependencies (bun).
 - `mise run docs-dev` - start the live-reloading dev server.

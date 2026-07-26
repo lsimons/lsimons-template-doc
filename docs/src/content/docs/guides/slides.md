@@ -17,7 +17,7 @@ rendered [HTML slides](/presentations/example.html) or the
 
 ## Render
 
-Quarto is pinned in `mise.toml`. Render the example (both formats) with:
+Quarto is pinned in `.mise.toml`. Render the example (both formats) with:
 
 ```bash
 mise run docs-slides

@@ -10,7 +10,7 @@ A template for building documentation sites: an [Astro Starlight](https://starli
 
 ## Quick Reference
 
-Tooling is pinned in `mise.toml` (bun, quarto, prek, lychee, gitleaks); run `mise install` once. Tasks are mise tasks - run them with `mise run <task>`:
+Tooling is pinned in `.mise.toml` (bun, quarto, prek, lychee, gitleaks); run `mise install` once. Tasks are mise tasks - run them with `mise run <task>`:
 
 - **Rename the template**: `mise run init` (or `mise run init --name my-docs --title "My Docs"`)
 - **Install**: `mise run docs-install`
@@ -42,7 +42,7 @@ must include the base path.
   - `astro.config.mjs` - site/base, the sidebar, the slide redirect, and the
     rehype base-link plugin.
 - `scripts/init.mjs` - renames the template placeholders to your project.
-- `mise.toml` - pinned tools and the dev/build tasks (run with `mise run <task>`).
+- `.mise.toml` - pinned tools and the dev/build tasks (run with `mise run <task>`).
 - `prek.toml` - git hooks (mdformat, markdownlint, lychee, gitleaks,
   commitlint); `prek install -t pre-commit -t commit-msg` once per clone.
 - `.github/workflows/ci.yml` builds + astro-checks on push/PR;

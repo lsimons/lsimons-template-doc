@@ -10,7 +10,7 @@ You could read the [open source contribution guide](https://opensource.guide/how
 
 This site is built with [Astro Starlight](https://starlight.astro.build/).
 
-Tools are pinned in `mise.toml`; run `mise install` once. Then:
+Tools are pinned in `.mise.toml`; run `mise install` once. Then:
 
 - `mise run docs-install` - Install the site dependencies (bun).
 - `mise run docs-dev` - Start the live-reloading docs server.
