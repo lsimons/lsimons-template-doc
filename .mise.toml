@@ -1,11 +1,31 @@
 # mise: https://mise.jdx.dev/
+#
+# `mise install` installs everything under [tools]; `mise run <task>` runs
+# the tasks below. `mise run ci` is the full gate.
 
+# Every tool is pinned to an exact version, deliberately and without
+# exception. This is a supply-chain rule, not a stability one: an upstream
+# compromise must never be auto-downloaded. A blanket "pin everything,
+# update mechanically" policy is far easier to review than a
+# per-dependency judgement about which upstreams are trustworthy enough to
+# float.
+#
+# The cost is that nothing here is covered by dependabot, so these go stale
+# silently. Refresh them deliberately with `mise up`, and read the diff.
 [tools]
-bun = "1.3"
-gitleaks = "8.30"
-lychee = "0.24"
-prek = "0.4"
-"aqua:quarto-dev/quarto-cli" = "1.10"
+bun = "1.3.14"
+gitleaks = "8.30.1"
+lychee = "0.24.2"
+prek = "0.4.11"
+"aqua:quarto-dev/quarto-cli" = "1.10.18"
+# Used by `mise run audit`; must match `version:` in the workflow's zizmor
+# job. Bump them together.
+zizmor = "1.29.0"
+# Used by `mise run lint`. actionlint shells out to shellcheck for the
+# `run:` blocks in workflows, and silently skips that half if shellcheck is
+# missing, so shellcheck is pinned here too rather than left to the host.
+actionlint = "1.7.12"
+shellcheck = "0.11.0"
 
 [tasks.init]
 description = "Rename this template to a new project (see scripts/init.mjs)"
@@ -65,6 +85,62 @@ bun run preview --port 4321 > /tmp/astro-preview.log 2>&1 &
 sleep 4
 bunx playwright screenshot --viewport-size=1280,800 "http://localhost:4321${path}" "$out"
 status=$?; pkill -f "astro preview" || true; exit $status
+"""
+
+# The prek hooks (mdformat, markdownlint, gitleaks, the pre-commit-hooks
+# set) are the lint stack; prek.toml is their single source of truth. Run
+# them here too so the checks are enforced in CI rather than only for
+# people who remembered `prek install`.
+#
+# `lychee` is skipped: it is a network check that flakes on rate limits and
+# TLS handshakes, so it lives in `mise run links` instead of the gate.
+[tasks.lint]
+description = "prek hooks (mdformat, markdownlint, gitleaks) + actionlint"
+run = ["prek run --all-files --skip lychee", "actionlint"]
+
+[tasks.links]
+description = "lychee broken-link check (network; not part of `ci`)"
+run = "lychee --no-progress --config .lychee.toml ."
+
+# Sequential rather than `depends`, which mise runs in parallel:
+# `docs-check` and `docs-build` both write `docs/.astro`. The workflow runs
+# the same list as separate steps for readable logs — keep the two in sync.
+[tasks.ci]
+description = "Full CI gate: install + lint + Astro check + build"
+run = [
+  "mise run docs-install",
+  "mise run lint",
+  "mise run docs-check",
+  "mise run docs-build",
+]
+
+# Local mirror of the `zizmor` CI job, using the mise-pinned zizmor. Not
+# part of `ci` because it needs network access and a GitHub token for the
+# online audits.
+#
+# Without a token zizmor silently falls back to offline and skips the
+# `impostor-commit` and `known-vulnerable-actions` audits, which is an
+# unverified result, not a pass — so refuse to run rather than exit 0 on a
+# weaker check than the name promises.
+#
+# `--collect=all` would be wrong here: it means "ignore .gitignore", which
+# after `mise run docs-install` sweeps in every vendored workflow under
+# docs/node_modules and produces dozens of findings about other people's
+# repos. Naming the three kinds explicitly keeps .gitignore honoured, so
+# the result does not depend on whether the site deps happen to be
+# installed. Must match `collect:` in the workflow's zizmor job.
+[tasks.audit]
+description = "zizmor audit of GitHub Actions workflows + dependabot config"
+run = """
+set -e
+GH_TOKEN=$(gh auth token 2>/dev/null) || true
+if [ -z "$GH_TOKEN" ]; then
+  echo "No GitHub token: run \\`gh auth login\\`. Refusing to run a" >&2
+  echo "partial audit — the online audits would be silently skipped." >&2
+  exit 1
+fi
+export GH_TOKEN
+zizmor --collect=workflows,actions,dependabot --strict-collection .
 """
 
 [tasks.ci-watch]

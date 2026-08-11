@@ -3,6 +3,11 @@
     "MD013": false,
     "MD024": false,
     "MD033": false,
+    // The .mjs/.mdx/.css sources in this repo are tab-indented, so code
+    // samples quoting them are tab-indented too. Detabbing the samples
+    // would make the docs disagree with the files they show. Hard tabs in
+    // prose are still an error.
+    "MD010": { "code_blocks": false },
     // Starlight pages carry their title in frontmatter, so the body has no
     // leading H1.
     "MD041": false,
