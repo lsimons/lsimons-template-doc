@@ -13,21 +13,22 @@ A template for building documentation sites: an [Astro Starlight](https://starli
 Every repo task lives in `.mise.toml`; `mise tasks` lists them. Run `mise trust`
 and `mise install` once per clone.
 
-| Task                    | What it does                                                |
-| ----------------------- | ----------------------------------------------------------- |
-| `mise run init`         | Rename the template placeholders to the project name        |
-| `mise run docs-install` | Install the site dependencies (bun)                         |
-| `mise run docs-dev`     | Dev server at <http://localhost:4321/lsimons-template-doc/> |
-| `mise run docs-build`   | Build the static site into `docs/dist`                      |
-| `mise run docs-check`   | Astro type/content check                                    |
-| `mise run lint`         | prek hooks over every file + `actionlint`                   |
-| `mise run ci`           | Full gate: install + lint + check + build                   |
-| `mise run links`        | `lychee` broken-link check (network; not part of `ci`)      |
-| `mise run audit`        | `zizmor` audit of workflows + dependabot config             |
-| `mise run docs-slides`  | Render the example `.qmd` deck to HTML + PDF                |
-| `mise run docs-favicon` | Regenerate the favicon + apple-touch-icon                   |
-| `mise run docs-clean`   | Remove build artifacts                                      |
-| `mise run ci-watch`     | Watch GitHub Actions for the current branch                 |
+| Task                           | What it does                                                |
+| ------------------------------ | ----------------------------------------------------------- |
+| `mise run init`                | Rename the template placeholders to the project name        |
+| `mise run docs-install`        | Install the site dependencies (bun); may update `bun.lock`  |
+| `mise run docs-install-frozen` | Same, but fails if `bun.lock` is out of date                |
+| `mise run docs-dev`            | Dev server at <http://localhost:4321/lsimons-template-doc/> |
+| `mise run docs-build`          | Build the static site into `docs/dist`                      |
+| `mise run docs-check`          | Astro type/content check                                    |
+| `mise run lint`                | prek hooks over every file + `actionlint`                   |
+| `mise run ci`                  | Full gate: install + lint + check + build                   |
+| `mise run links`               | `lychee` broken-link check (network; not part of `ci`)      |
+| `mise run audit`               | `zizmor` audit of workflows + dependabot config             |
+| `mise run docs-slides`         | Render the example `.qmd` deck to HTML + PDF                |
+| `mise run docs-favicon`        | Regenerate the favicon + apple-touch-icon                   |
+| `mise run docs-clean`          | Remove build artifacts                                      |
+| `mise run ci-watch`            | Watch GitHub Actions for the current branch                 |
 
 Also available: `docs-preview`, `docs-browser`, and
 `mise run docs-screenshot out.png /lsimons-template-doc/`.
@@ -85,7 +86,10 @@ must include the base path.
 
 **Supply chain:**
 
-- `docs/bun.lock` is committed and must stay in the tree.
+- `docs/bun.lock` is committed and must stay in the tree. `mise run ci` and
+  CI install with `--frozen-lockfile`, so a `docs/package.json` change the
+  lockfile does not reflect fails the gate instead of being silently
+  resolved on the runner. Run `mise run docs-install` and commit the result.
 - GitHub Actions are pinned to full-length commit SHAs with a `# vX.Y.Z`
   comment, and `zizmor` enforces that in CI.
 - Every tool in `.mise.toml` is pinned to an exact version, as are the

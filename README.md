@@ -96,6 +96,7 @@ lsimons-template-doc/
 ├── .github/dependabot.yml        # weekly bun + github-actions updates
 ├── .claude/settings.json         # shared agent permissions (tracked on purpose)
 ├── .editorconfig                 # editor defaults
+├── .gitignore
 ├── .mise.toml                    # toolchain pins + every repo task
 ├── prek.toml                     # git hooks, also run by `mise run lint`
 ├── .markdownlint-cli2.jsonc      # markdownlint rules
@@ -107,6 +108,7 @@ lsimons-template-doc/
 │   ├── src/styles/custom.css     # the LSD Warm theme
 │   ├── public/presentations/     # Quarto decks + committed HTML/PDF output
 │   ├── astro.config.mjs          # site, base path, sidebar, rehype plugin
+│   ├── package.json              # site dependencies (ranges; bun.lock pins them)
 │   └── bun.lock                  # committed; never gitignore this
 ├── scripts/init.mjs              # rename-to-your-project helper
 ├── AGENTS.md                     # AI agent instructions
@@ -128,6 +130,14 @@ Enable GitHub Pages with the source set to **GitHub Actions** (not "Deploy from
 a branch"). A push to `main` then builds and deploys the site. The deploy base
 path (set as `base` in `docs/astro.config.mjs`) matches the repo name, so the
 site lands at `https://lsimons.github.io/<repo>/`.
+
+Then restrict the `github-pages` environment's deployment branches to `main`
+(Settings → Environments → `github-pages` → Deployment branches). Like the
+Pages source itself, that is repository state rather than a file, so
+`Use this template` does not copy it and nothing in this repo can create it.
+`deploy.yml` only triggers on `push` to `main` and `workflow_dispatch`, both of
+which already require write access, so the branch policy is defence in depth
+rather than the only control.
 
 ## License
 

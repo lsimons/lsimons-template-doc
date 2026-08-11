@@ -18,7 +18,10 @@ This site is built with [Astro Starlight](https://starlight.astro.build/).
 
 Tools are pinned in `.mise.toml`; run `mise install` once. Then:
 
-- `mise run docs-install` - Install the site dependencies (bun).
+- `mise run docs-install` - Install the site dependencies (bun). Updates
+  `docs/bun.lock` if `docs/package.json` changed; commit the result.
+  `mise run ci` and CI use `docs-install-frozen`, which fails instead of
+  resolving the difference.
 - `mise run docs-dev` - Start the live-reloading docs server.
 - `mise run docs-build` - Build the documentation site into `docs/dist`.
 - `mise run docs-check` - Run the Astro type/content check.
