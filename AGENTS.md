@@ -10,15 +10,27 @@ A template for building documentation sites: an [Astro Starlight](https://starli
 
 ## Quick Reference
 
-Tooling is pinned in `.mise.toml` (bun, quarto, prek, lychee, gitleaks); run `mise install` once. Tasks are mise tasks - run them with `mise run <task>`:
+Every repo task lives in `.mise.toml`; `mise tasks` lists them. Run `mise trust`
+and `mise install` once per clone.
 
-- **Rename the template**: `mise run init` (or `mise run init --name my-docs --title "My Docs"`)
-- **Install**: `mise run docs-install`
-- **Serve locally**: `mise run docs-dev` -> <http://localhost:4321/lsimons-template-doc/>
-- **Build**: `mise run docs-build`
-- **Type/content check**: `mise run docs-check`
-- **Render slides**: `mise run docs-slides` (HTML + PDF from the example `.qmd`)
-- **Screenshot a page**: `mise run docs-browser` once, then `mise run docs-screenshot out.png /lsimons-template-doc/`
+| Task                    | What it does                                                |
+| ----------------------- | ----------------------------------------------------------- |
+| `mise run init`         | Rename the template placeholders to the project name        |
+| `mise run docs-install` | Install the site dependencies (bun)                         |
+| `mise run docs-dev`     | Dev server at <http://localhost:4321/lsimons-template-doc/> |
+| `mise run docs-build`   | Build the static site into `docs/dist`                      |
+| `mise run docs-check`   | Astro type/content check                                    |
+| `mise run lint`         | prek hooks over every file + `actionlint`                   |
+| `mise run ci`           | Full gate: install + lint + check + build                   |
+| `mise run links`        | `lychee` broken-link check (network; not part of `ci`)      |
+| `mise run audit`        | `zizmor` audit of workflows + dependabot config             |
+| `mise run docs-slides`  | Render the example `.qmd` deck to HTML + PDF                |
+| `mise run docs-favicon` | Regenerate the favicon + apple-touch-icon                   |
+| `mise run docs-clean`   | Remove build artifacts                                      |
+| `mise run ci-watch`     | Watch GitHub Actions for the current branch                 |
+
+Also available: `docs-preview`, `docs-browser`, and
+`mise run docs-screenshot out.png /lsimons-template-doc/`.
 
 ## Structure
 
@@ -45,10 +57,44 @@ must include the base path.
 - `.mise.toml` - pinned tools and the dev/build tasks (run with `mise run <task>`).
 - `prek.toml` - git hooks (mdformat, markdownlint, lychee, gitleaks,
   commitlint); `prek install -t pre-commit -t commit-msg` once per clone.
-- `.github/workflows/ci.yml` builds + astro-checks on push/PR;
+- `.github/workflows/ci.yml` lints, astro-checks and builds on push/PR;
   `deploy.yml` publishes `docs/dist` to GitHub Pages on push to `main`. The
   Pages source must be set to "GitHub Actions" (not "Deploy from a branch").
   CI does not run Quarto - the slide outputs are committed.
+
+## Guidelines
+
+**Content quality:**
+
+- `mise run ci` must pass before you push. It is the same list the CI job
+  runs, in the same order.
+- Internal links are root-relative; the rehype plugin adds the base path.
+  `starlight-links-validator` fails `mise run docs-build` on a dead one, so
+  the build is the check — do not disable it.
+- `mise run links` (lychee) checks *external* URLs only; internal ones
+  resolve against the published origin, which `.lychee.toml` excludes. It is
+  not part of `ci` because it is a network call that flakes.
+- Re-render and commit a deck's HTML/PDF whenever you change its `.qmd`.
+  CI does not run Quarto.
+- Do not silence a check without a written justification on the same line.
+  A bare rule disable in `.markdownlint-cli2.jsonc` is not acceptable; one
+  with a comment saying which files it is for, and why, is.
+- Never weaken a control to make a check pass: do not unpin an action,
+  drop a hook from `prek.toml`, or add a URL to `.lychee.toml`'s `exclude`
+  list because it is genuinely broken.
+
+**Supply chain:**
+
+- `docs/bun.lock` is committed and must stay in the tree.
+- GitHub Actions are pinned to full-length commit SHAs with a `# vX.Y.Z`
+  comment, and `zizmor` enforces that in CI.
+- Every tool in `.mise.toml` is pinned to an exact version, as are the
+  `additional_dependencies` of the `prek.toml` hooks. None of that is
+  covered by dependabot, so refresh it deliberately with `mise up` and read
+  the diff.
+- Dependencies in `docs/package.json` are *not* hard-pinned: `docs/bun.lock`
+  pins them exactly, and hard-pinning would fight dependabot, whose job is
+  to move the constraint.
 
 ## Commit Message Convention
 
@@ -62,14 +108,14 @@ Follow [Conventional Commits](https://conventionalcommits.org/):
 
 Work is NOT complete until every change is committed, pushed, and CI passes.
 
-1. **Quality gates** (if the site changed):
+1. **Quality gates** (if anything changed):
 
    ```bash
-   mise run docs-build && mise run docs-check
+   mise run ci
    ```
 
    If a slide deck changed, also `mise run docs-slides` and commit the rendered
-   HTML/PDF.
+   HTML/PDF. If a workflow changed, also `mise run audit`.
 
 2. **Commit**: stage and commit every change from this session. Do not leave the working tree dirty.
 

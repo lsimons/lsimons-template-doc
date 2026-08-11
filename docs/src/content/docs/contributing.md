@@ -16,6 +16,8 @@ Tools are pinned in `.mise.toml`; run `mise install` once. Then:
 - `mise run docs-dev` - start the live-reloading dev server.
 - `mise run docs-build` - build the static site into `docs/dist`.
 - `mise run docs-check` - run the Astro type/content check.
+- `mise run lint` - run the prek hooks over every file, plus `actionlint`.
+- `mise run ci` - the full gate: install, lint, check, build. CI runs the same.
 
 Content lives in `docs/src/content/docs/`; static assets in `docs/public/`.
 
