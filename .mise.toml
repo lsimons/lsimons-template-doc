@@ -31,10 +31,24 @@ shellcheck = "0.11.0"
 description = "Rename this template to a new project (see scripts/init.mjs)"
 run = "bun run scripts/init.mjs"
 
+# Deliberately NOT --frozen-lockfile: this is the task you run while
+# actually changing dependencies, and it is allowed to update bun.lock.
+# `docs-install-frozen` is the one the gate uses.
 [tasks.docs-install]
-description = "Install the site dependencies (bun)"
+description = "Install the site dependencies (bun); may update bun.lock"
 dir = "docs"
 run = "bun install"
+
+# A lockfile CI is willing to regenerate is not a pin. Without
+# --frozen-lockfile a package.json change that bun.lock does not reflect is
+# silently resolved on the runner, and the resolved versions are then
+# whatever was newest at that moment — exactly the auto-download this
+# repo's pinning policy exists to prevent. This has already happened once
+# here: bun.lock's recorded constraints had drifted from package.json.
+[tasks.docs-install-frozen]
+description = "Install the site dependencies, failing if bun.lock is out of date"
+dir = "docs"
+run = "bun install --frozen-lockfile"
 
 [tasks.docs-dev]
 description = "Start the live-reloading dev server"
@@ -108,7 +122,7 @@ run = "lychee --no-progress --config .lychee.toml ."
 [tasks.ci]
 description = "Full CI gate: install + lint + Astro check + build"
 run = [
-  "mise run docs-install",
+  "mise run docs-install-frozen",
   "mise run lint",
   "mise run docs-check",
   "mise run docs-build",
@@ -123,14 +137,22 @@ run = [
 # unverified result, not a pass — so refuse to run rather than exit 0 on a
 # weaker check than the name promises.
 #
-# `--collect=all` would be wrong here: it means "ignore .gitignore", which
-# after `mise run docs-install` sweeps in every vendored workflow under
-# docs/node_modules and produces dozens of findings about other people's
-# repos. Naming the three kinds explicitly keeps .gitignore honoured, so
-# the result does not depend on whether the site deps happen to be
-# installed. Must match `collect:` in the workflow's zizmor job.
+# There is deliberately no `--collect` here. zizmor's default already
+# collects every kind of input — workflows, composite actions, the
+# dependabot config and `.pre-commit-config.yaml` — while honouring
+# .gitignore. (The one-line summary in `--help` says "workflows and
+# composite actions"; that sentence is stale and the enum below it is what
+# the code does. Checked with `zizmor -v`, which logs each input it
+# registers.)
+#
+# `--collect=all` is the trap: it means "collect every kind *and ignore
+# .gitignore*", so after `mise run docs-install` it sweeps in every
+# vendored workflow under docs/node_modules — 53 findings about other
+# people's repositories. Naming kinds explicitly avoids that too, but is
+# strictly narrower than the default and silently drops pre-commit
+# coverage. Omitting the flag is both simpler and broader.
 [tasks.audit]
-description = "zizmor audit of GitHub Actions workflows + dependabot config"
+description = "zizmor audit of workflows, actions and the dependabot config"
 run = """
 set -e
 GH_TOKEN=$(gh auth token 2>/dev/null) || true
@@ -140,7 +162,7 @@ if [ -z "$GH_TOKEN" ]; then
   exit 1
 fi
 export GH_TOKEN
-zizmor --collect=workflows,actions,dependabot --strict-collection .
+zizmor --strict-collection .
 """
 
 [tasks.ci-watch]

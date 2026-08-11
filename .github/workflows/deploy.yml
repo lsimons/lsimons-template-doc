@@ -41,7 +41,7 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
 
       - name: Install
-        run: mise run docs-install
+        run: mise run docs-install-frozen
 
       - name: Build
         run: mise run docs-build

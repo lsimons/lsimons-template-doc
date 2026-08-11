@@ -24,6 +24,11 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          # `mise run lint` includes the gitleaks hook, which scans git
+          # history. At the default fetch-depth of 1 it would see a single
+          # commit, so CI would run a far weaker check than a developer
+          # does locally while the README advertises them as the same one.
+          fetch-depth: 0
 
       - name: Set up mise
         uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
@@ -49,7 +54,7 @@ jobs:
       # are spelled out rather than run as one `mise run ci` so a failure
       # names itself in the job summary. Keep the two lists in sync.
       - name: Install
-        run: mise run docs-install
+        run: mise run docs-install-frozen
 
       - name: Lint
         run: mise run lint
@@ -74,12 +79,13 @@ jobs:
         uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
         with:
           advanced-security: false
-          # The action's own defaults are version "latest" and collect
-          # "default". Pin the version so a zizmor release cannot turn CI
-          # red on its own, and name the collection kinds so
-          # .github/dependabot.yml is audited too (`default` skips it, and
-          # `all` would additionally stop honouring .gitignore). Both must
-          # match `mise run audit` for that task to be a real local
-          # mirror — bump them together.
+          # Pin the version: the action's default is "latest", so a zizmor
+          # release could turn CI red on its own. Keep in step with
+          # `zizmor` in .mise.toml, which is what `mise run audit` uses.
           version: "1.29.0"
-          collect: workflows,actions,dependabot
+          # `collect` is deliberately unset. The action's default already
+          # covers workflows, composite actions, .github/dependabot.yml and
+          # .pre-commit-config.yaml, while honouring .gitignore. Do not set
+          # `collect: all` — that means "and stop honouring .gitignore",
+          # which sweeps in every vendored workflow under docs/node_modules
+          # and reports dozens of findings about other people's repos.
