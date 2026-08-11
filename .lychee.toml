@@ -3,7 +3,10 @@
 
 # Root-relative internal links (/guides/getting-started/, /diagram.png) resolve
 # against our published site, so they land under the excluded lsimons.github.io
-# domain below. The Astro build validates them for real.
+# domain below — lychee never checks them. `starlight-links-validator`, wired
+# into `docs/astro.config.mjs`, is what validates internal links, and it fails
+# `mise run docs-build` when one is dead. lychee's job here is external URLs
+# only.
 base_url = "https://lsimons.github.io/lsimons-template-doc/"
 
 # 429 (rate limited) and 403 (bot-protected) are not broken links; accept them

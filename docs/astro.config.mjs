@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightLinksValidator from 'starlight-links-validator';
 
 // This is a *project* site: it deploys under a subpath of https://lsimons.github.io
 // (e.g. https://lsimons.github.io/lsimons-template-doc/), so it sets `base`.
@@ -58,6 +59,10 @@ export default defineConfig({
 	},
 	integrations: [
 		starlight({
+			// Fails the build on a dead internal link. lychee cannot do this
+			// job here: root-relative links resolve against the published
+			// lsimons.github.io origin, which .lychee.toml excludes.
+			plugins: [starlightLinksValidator()],
 			title: 'Template Docs',
 			description: 'A template for building documentation sites with Astro Starlight.',
 			favicon: '/favicon.svg',

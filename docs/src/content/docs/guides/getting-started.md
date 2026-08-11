@@ -42,7 +42,12 @@ mise run docs-install   # install site dependencies (bun)
 mise run docs-dev       # dev server at http://localhost:4321/lsimons-template-doc/
 mise run docs-build     # build the static site into docs/dist
 mise run docs-check     # Astro type/content check
+mise run lint           # prek hooks over every file + actionlint
+mise run ci             # the full gate: install + lint + check + build
 ```
+
+`mise run ci` is what CI runs. `docs-build` also validates every internal
+link (via `starlight-links-validator`) and fails on a dead one.
 
 Content lives in `docs/src/content/docs/`; static assets and downloads in
 `docs/public/`. Edit `docs/astro.config.mjs` to change the title, sidebar, and
@@ -58,5 +63,5 @@ the `base` set in `docs/astro.config.mjs`.
 
 ## Next steps
 
-- [Writing pages](/writing-pages/) - add content and wire up the sidebar.
-- [Slide decks with Quarto](/slides/) - author and render presentations.
+- [Writing pages](/guides/writing-pages/) - add content and wire up the sidebar.
+- [Slide decks with Quarto](/guides/slides/) - author and render presentations.
