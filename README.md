@@ -116,7 +116,6 @@ lsimons-template-doc/
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── LICENSE                       # Apache-2.0
-├── SECURITY.md                   # vulnerability reporting route
 └── README.md
 ```
 
@@ -148,7 +147,3 @@ See [LICENSE](./LICENSE) (Apache 2.0).
 See [CONTRIBUTING.md](./CONTRIBUTING.md) and the
 [Code of Conduct](./CODE_OF_CONDUCT.md). AI agents see
 [AGENTS.md](./AGENTS.md).
-
-## Security
-
-See [SECURITY.md](./SECURITY.md).

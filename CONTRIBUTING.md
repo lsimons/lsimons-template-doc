@@ -6,7 +6,8 @@ Any contributions you make are governed by our [License](LICENSE).
 
 Please follow our [Code of Conduct](CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
 
-To report a security problem, follow [SECURITY.md](SECURITY.md) instead of opening a public issue.
+Do not report a security problem in a public issue. Use the "Report a
+vulnerability" button under the repository's Security tab instead.
 
 You could read the [open source contribution guide](https://opensource.guide/how-to-contribute/) for general advice on how to contribute.
 
