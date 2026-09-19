@@ -18,7 +18,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "playwright": "^1.63.0",
-    "starlight-links-validator": "^0.25.3",
+    "starlight-links-validator": "^0.26.0",
     "typescript": "^6.0.3"
   },
   "overrides": {
