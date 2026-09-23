@@ -17,7 +17,7 @@ under <https://lsimons.github.io/>.
    mise install                       # pin + install bun, quarto, hooks
    mise run init                      # infer the name from the git remote / directory
    # or: mise run init --name my-docs --title "My Docs"
-   mise run site-install              # install the site dependencies (bun)
+   mise run site-install              # install the site dependencies and lint tools (bun)
    prek install -t pre-commit -t commit-msg   # once per clone: git hooks
    ```
 
@@ -58,7 +58,10 @@ under <https://lsimons.github.io/>.
   exact version, and every repo task lives there (run with `mise run <task>`).
 - **Git hooks** (`prek.toml`) - mdformat, markdownlint, lychee, gitleaks, and
   commitlint. `mise run lint` runs the same hooks in CI, so they are enforced
-  rather than opt-in.
+  rather than opt-in. Hook repos are pinned by commit SHA, the Python hooks
+  pin their whole dependency tree, and the Node tools (markdownlint-cli2,
+  commitlint, cspell) come from the bun-locked `site/package.json`, so
+  nothing a hook runs is resolved at install time.
 - **Dependabot** for `bun` (the site deps) and `github-actions`, weekly, with a
   7-day cooldown.
 - **`.editorconfig`** so editors that are not running the hooks still agree
@@ -69,7 +72,7 @@ under <https://lsimons.github.io/>.
 ```bash
 mise trust               # once per clone
 mise install             # one-time: pin + install the toolchain
-mise run site-install    # install the site dependencies (bun)
+mise run site-install    # install the site dependencies and lint tools (bun)
 mise run site-dev        # dev server at http://localhost:4321/lsimons-template-doc/
 mise run site-build      # build the static site into site/dist
 mise run site-check      # Astro type/content check
@@ -104,7 +107,6 @@ lsimons-template-doc/
 ├── .markdownlint-cli2.jsonc      # markdownlint rules
 ├── .mdformat.toml                # Markdown formatter settings
 ├── .lychee.toml                  # link-checker settings
-├── commitlint.config.mjs         # Conventional Commits rules
 ├── cspell.json                   # spell-check settings; words in cspell-words.txt
 ├── .vale.ini                     # prose lint rules; House style in .vale/styles/
 ├── docs/prose/                   # which Vale rule runs where, and why
@@ -113,10 +115,12 @@ lsimons-template-doc/
 │   ├── src/styles/custom.css     # the LSD Warm theme
 │   ├── public/presentations/     # Quarto decks + committed HTML/PDF output
 │   ├── astro.config.mjs          # site, base path, sidebar, rehype plugin
-│   ├── package.json              # site dependencies (ranges; bun.lock pins them)
+│   ├── commitlint.config.mjs     # Conventional Commits rules (next to its install)
+│   ├── package.json              # site dependencies + lint tools (bun.lock pins them)
 │   └── bun.lock                  # committed; never gitignore this
 ├── docs/                         # specs, plans, design notes (not published)
 ├── scripts/init.mjs              # rename-to-your-project helper
+├── scripts/render-slides.mjs     # `mise run site-slides`: Quarto render + reveal.js hardening
 ├── AGENTS.md                     # AI agent instructions
 ├── CLAUDE.md -> AGENTS.md        # Claude Code compatibility
 ├── CODE_OF_CONDUCT.md

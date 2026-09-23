@@ -13,26 +13,26 @@ A template for building documentation sites: an [Astro Starlight](https://starli
 Every repo task lives in `.mise.toml`; `mise tasks` lists them. Run `mise trust`
 and `mise install` once per clone.
 
-| Task                           | What it does                                                         |
-| ------------------------------ | -------------------------------------------------------------------- |
-| `mise run init`                | Rename the template placeholders to the project name                 |
-| `mise run site-install`        | Install the site dependencies (bun); may update `bun.lock`           |
-| `mise run site-install-frozen` | Same, but fails if `bun.lock` is out of date                         |
-| `mise run site-dev`            | Dev server at <http://localhost:4321/lsimons-template-doc/>          |
-| `mise run site-build`          | Build the static site into `site/dist`                               |
-| `mise run site-check`          | Astro type/content check                                             |
-| `mise run lint`                | prek hooks over every file + `actionlint`                            |
-| `mise run spell`               | `cspell` (American English) over Markdown, MDX, and Quarto           |
-| `mise run prose`               | `vale` prose lint over Markdown and MDX; errors gate, warnings print |
-| `mise run prose-sync`          | Fetch the pinned Vale style packages (network)                       |
-| `mise run ci`                  | Full gate: install + lint + spell + prose + check + build            |
-| `mise run links`               | `lychee` broken-link check (network; not part of `ci`)               |
-| `mise run audit`               | `zizmor` audit of workflows + Dependabot config                      |
-| `mise run site-audit`          | `bun audit` of the site dependency tree (network)                    |
-| `mise run site-slides`         | Render the example `.qmd` deck to HTML + PDF                         |
-| `mise run site-favicon`        | Regenerate the favicon + apple-touch-icon                            |
-| `mise run site-clean`          | Remove build artifacts                                               |
-| `mise run ci-watch`            | Watch GitHub Actions for the current branch                          |
+| Task                           | What it does                                                              |
+| ------------------------------ | ------------------------------------------------------------------------- |
+| `mise run init`                | Rename the template placeholders to the project name                      |
+| `mise run site-install`        | Install the site dependencies and lint tools (bun); may update `bun.lock` |
+| `mise run site-install-frozen` | Same, but fails if `bun.lock` is out of date                              |
+| `mise run site-dev`            | Dev server at <http://localhost:4321/lsimons-template-doc/>               |
+| `mise run site-build`          | Build the static site into `site/dist`                                    |
+| `mise run site-check`          | Astro type/content check                                                  |
+| `mise run lint`                | prek hooks over every file + `actionlint`                                 |
+| `mise run spell`               | `cspell` (American English) over Markdown, MDX, and Quarto                |
+| `mise run prose`               | `vale` prose lint over Markdown and MDX; errors gate, warnings print      |
+| `mise run prose-sync`          | Fetch the pinned Vale style packages (network)                            |
+| `mise run ci`                  | Full gate: install + lint + spell + prose + check + build                 |
+| `mise run links`               | `lychee` broken-link check (network; not part of `ci`)                    |
+| `mise run audit`               | `zizmor` audit of workflows + Dependabot config                           |
+| `mise run site-audit`          | `bun audit` of the site dependency tree (network)                         |
+| `mise run site-slides`         | Render the example `.qmd` deck to HTML + PDF                              |
+| `mise run site-favicon`        | Regenerate the favicon + apple-touch-icon                                 |
+| `mise run site-clean`          | Remove build artifacts                                                    |
+| `mise run ci-watch`            | Watch GitHub Actions for the current branch                               |
 
 Also available: `site-preview`, `site-browser`, and
 `mise run site-screenshot out.png /lsimons-template-doc/`.
@@ -69,6 +69,10 @@ must include the base path.
 - `.mise.toml` - pinned tools and the dev/build tasks (run with `mise run <task>`).
 - `prek.toml` - git hooks (mdformat, markdownlint, lychee, gitleaks,
   commitlint); `prek install -t pre-commit -t commit-msg` once per clone.
+  The markdownlint and commitlint hooks, and `mise run spell`, run the
+  binaries from `site/node_modules/.bin`, so `mise run site-install` first.
+- `scripts/render-slides.mjs` - what `mise run site-slides` runs: Quarto
+  render, then `postMessage: false` in the reveal.js config of the HTML.
 - `.github/workflows/ci.yml` lints, runs the Astro check, and builds on push/PR;
   `deploy.yml` publishes `site/dist` to GitHub Pages on push to `main`. The
   Pages source must be set to "GitHub Actions" (not "Deploy from a branch").
@@ -141,9 +145,21 @@ below after the fact. Write so that it has nothing to say.
   nested resolution. Keep each entry inside the range its parents already
   ask for, and drop it once their own releases move past it.
 - Pin GitHub Actions to full-length commit SHAs; `zizmor` enforces it.
-- Every `.mise.toml` tool and every `prek.toml`
-  `additional_dependencies` entry is exact-pinned and invisible to
-  Dependabot; refresh with `mise up` and read the diff.
+- Every `.mise.toml` tool is exact-pinned and invisible to Dependabot;
+  refresh with `mise up` and read the diff. mise itself is pinned too:
+  `min_version` in `.mise.toml` and the `version` + `sha256` inputs of
+  `jdx/mise-action` in both workflows name the same release. Bump them
+  together; the sha256 is of the extracted linux-x64 binary.
+- `prek.toml` hook repos are pinned by commit SHA (tag in the comment),
+  and each Python hook lists its full transitive tree in
+  `additional_dependencies`, exact-pinned. Node lint tools
+  (markdownlint-cli2, commitlint, cspell) are devDependencies in
+  `site/package.json`, so `bun.lock` pins their trees and Dependabot moves
+  them. Do not add a hook that resolves packages at install time.
+- Never allow-list a `Bash(mise run <task> *)` rule in
+  `.claude/settings.json` for a task whose argument reaches a shell as
+  text. Task arguments are declared with `usage` and read as `$usage_*`
+  variables so they arrive as one argv entry.
 
 ## Commit message convention
 

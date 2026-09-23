@@ -24,8 +24,13 @@ mise run site-slides
 ```
 
 That runs `quarto render site/public/presentations/example.qmd`, which produces
-`example.html` and `example.pdf` beside the source. The PDF output uses LaTeX
-(Beamer); if it is missing, install it once with `quarto install tinytex`.
+`example.html` and `example.pdf` beside the source, and then sets
+`postMessage: false` in the HTML deck's reveal.js configuration. reveal.js
+accepts API calls over `window.postMessage` from any origin by default, and one
+of them can load a script from a URL, so the published deck must not leave it
+on. Quarto has no option for it, which is why the task post-processes the
+output (see `scripts/render-slides.mjs`). The PDF output uses LaTeX (Beamer); if
+it is missing, install it once with `quarto install tinytex`.
 
 The rendered outputs are committed to git, because decks change rarely and this
 keeps the deployed site a pure static build (CI does not run Quarto). Re-run
@@ -42,7 +47,8 @@ SCSS variables there to restyle the HTML slides.
 1. Copy `example.qmd` to a new name in `site/public/presentations/`.
 2. Edit the frontmatter `title`/`author` and write your slides (`#` starts a
    section, `##` starts a slide).
-3. Render with `quarto render site/public/presentations/your-deck.qmd`.
+3. Render with `mise run site-slides site/public/presentations/your-deck.qmd`
+   (not `quarto render` directly, so the postMessage step runs).
 4. Link it from the sidebar in `astro.config.mjs` (see the "Example slides"
    group), and add a redirect for the extensionless URL if you want a clean
    sidebar link.

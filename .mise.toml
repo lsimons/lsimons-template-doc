@@ -3,6 +3,12 @@
 # `mise install` installs everything under [tools]; `mise run <task>` runs
 # the tasks below. `mise run ci` is the full gate.
 
+# The lowest mise that may run this file. CI pins the same version (with
+# its sha256) in `jdx/mise-action`'s inputs: mise is the binary that
+# enforces mise.lock and minimum_release_age, so it is pinned like
+# everything it installs. Bump the three together.
+min_version = "2026.9.12"
+
 [settings]
 minimum_release_age = "7d"
 lockfile = true
@@ -30,9 +36,10 @@ zizmor = "1.30.1"
 # missing, so shellcheck is pinned here too rather than left to the host.
 actionlint = "1.7.12"
 shellcheck = "0.11.0"
-# Spell check in American English (`mise run spell`); names and jargon go in
-# cspell-words.txt, which cspell.json loads.
-cspell = "10.3.0"
+# cspell is deliberately not here. mise's `npm:` backend records no
+# checksum in mise.lock and resolves the package's dependency tree from the
+# registry at install time; it lives in site/package.json instead, where
+# bun.lock pins the whole tree, and `mise run spell` runs it from there.
 # Prose lint (`mise run prose`). Its style packages are pinned by URL in
 # .vale.ini and fetched by `mise run prose-sync`.
 vale = "3.20.0"
@@ -80,9 +87,22 @@ description = "Astro type/content check"
 dir = "site"
 run = "bunx astro check"
 
+# The deck path is a declared argument, so it reaches the script as one
+# argv entry and never as shell text. The script also turns off reveal.js's
+# cross-window postMessage API in the rendered HTML; see the script.
 [tasks.site-slides]
-description = "Render the example Quarto slide deck to HTML + PDF"
-run = "quarto render {{arg(name='deck', default='site/public/presentations/example.qmd')}}"
+description = "Render a Quarto slide deck to HTML + PDF (arg: [deck], flag: --html-only)"
+usage = '''
+arg "[deck]" help="Path to the .qmd deck" default="site/public/presentations/example.qmd"
+flag "--html-only" help="Skip the Beamer PDF (for a machine where LaTeX is missing or hangs)"
+'''
+run = '''
+if [ "${usage_html_only:-false}" = "true" ]; then
+  bun scripts/render-slides.mjs "$usage_deck" --html-only
+else
+  bun scripts/render-slides.mjs "$usage_deck"
+fi
+'''
 
 [tasks.site-favicon]
 description = "Regenerate the favicon + apple-touch-icon from the palette"
@@ -112,9 +132,13 @@ run = "bunx playwright install --with-deps chromium"
 [tasks.site-screenshot]
 description = "Build, serve, and screenshot a page (args: [out] [path]). Needs `mise run site-browser` once."
 dir = "site"
+usage = '''
+arg "[out]" help="Output PNG path" default="out.png"
+arg "[path]" help="Site path to capture" default="/lsimons-template-doc/"
+'''
 run = """
 bun run build
-bun scripts/screenshot.mjs "{{arg(name='out', default='out.png')}}" "{{arg(name='path', default='/lsimons-template-doc/')}}"
+bun scripts/screenshot.mjs "$usage_out" "$usage_path"
 """
 
 # The prek hooks (mdformat, markdownlint, gitleaks, the pre-commit-hooks
@@ -135,14 +159,16 @@ run = "lychee --no-progress --config .lychee.toml ."
 # Spell check in American English over every tracked Markdown, MDX and Quarto
 # file. cspell's en-US dictionary is separate from en-GB, so British spellings
 # fail. Names and jargon go in cspell-words.txt; inline code spans are skipped.
-# CLAUDE.md is a symlink to AGENTS.md and would count twice.
+# CLAUDE.md is a symlink to AGENTS.md and would count twice. cspell comes
+# from the bun-locked site install (see [tools]), so `site-install-frozen`
+# runs first, as it does in `ci`.
 [tasks.spell]
 description = "cspell (American English) over Markdown, MDX and Quarto files"
 run = """
 set -e
 files=$(git ls-files -- '*.md' '*.mdx' '*.qmd' ':!CLAUDE.md')
 # shellcheck disable=SC2086
-cspell --no-progress $files
+site/node_modules/.bin/cspell --no-progress $files
 """
 
 # The synced style packages are gitignored; this fetches them from the

@@ -19,8 +19,10 @@ This site is built with [Astro Starlight](https://starlight.astro.build/).
 
 Tools are pinned in `.mise.toml`; run `mise install` once. Then:
 
-- `mise run site-install` - Install the site dependencies (bun). Updates
-  `site/bun.lock` if `site/package.json` changed; commit the result.
+- `mise run site-install` - Install the site dependencies and the lint
+  tools (bun). Updates `site/bun.lock` if `site/package.json` changed;
+  commit the result. The markdownlint, commitlint, and cspell checks run
+  from this install, so it comes before `mise run lint`.
   `mise run ci` and CI use `site-install-frozen`, which fails instead of
   resolving the difference.
 - `mise run site-dev` - Start the live-reloading docs server.
@@ -41,7 +43,10 @@ must be green.
 
 The [example presentation](site/public/presentations/example.qmd) is built with [Quarto](https://quarto.org/).
 
-Render it to HTML and PDF with `mise run site-slides` (or `quarto render site/public/presentations/example.qmd`).
+Render it to HTML and PDF with `mise run site-slides` (or `mise run site-slides path/to/deck.qmd`).
+It runs `quarto render` and then disables the reveal.js postMessage API in the
+HTML output; see `scripts/render-slides.mjs` for why. Do not render with
+`quarto render` directly, because that step would be skipped.
 
 The presentations are modified so rarely that their rendered outputs are checked into git. Re-render and commit the outputs whenever you change a deck.
 

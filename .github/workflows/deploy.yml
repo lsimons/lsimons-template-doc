@@ -30,6 +30,18 @@ jobs:
       - name: Set up mise
         uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
+          # Pin mise itself, not only what it installs: the mise.lock
+          # checksums and minimum_release_age are enforced by this binary,
+          # so an unpinned "latest" here would undo them. The action hashes
+          # the extracted linux-x64 binary (`mise/bin/mise` inside the
+          # release tarball), not the tarball. Must match `min_version` in
+          # .mise.toml; bump the three together.
+          version: 2026.9.12
+          sha256: e79ae57945034903aee8aa2ea66b4c7ca9cd4f4edd5a8a78a589cbae6d0f428a
+          # This job only builds the site, so install only bun (mise adds
+          # --locked itself). The lint tools are not needed on the runner
+          # that produces the Pages artifact.
+          install_args: bun
           install: true
           cache: true
 
