@@ -22,7 +22,8 @@ and `mise install` once per clone.
 | `mise run site-build`          | Build the static site into `site/dist`                      |
 | `mise run site-check`          | Astro type/content check                                    |
 | `mise run lint`                | prek hooks over every file + `actionlint`                   |
-| `mise run ci`                  | Full gate: install + lint + check + build                   |
+| `mise run spell`               | `cspell` (American English) over Markdown, MDX and Quarto   |
+| `mise run ci`                  | Full gate: install + lint + spell + check + build           |
 | `mise run links`               | `lychee` broken-link check (network; not part of `ci`)      |
 | `mise run audit`               | `zizmor` audit of workflows + dependabot config             |
 | `mise run site-audit`          | `bun audit` of the site dependency tree (network)           |
@@ -79,6 +80,10 @@ must include the base path.
   not part of `ci` because it is a network call that flakes.
 - Re-render and commit a deck's HTML/PDF whenever you change its `.qmd`.
   CI does not run Quarto.
+- Spelling is American English, checked by cspell (`mise run spell`). Add
+  names and jargon to `cspell-words.txt`, grouped, one per line; never a
+  British spelling. Inline code spans are skipped, so identifiers need no
+  entry.
 - No unexplained rule disables in `.markdownlint-cli2.jsonc` — say which
   files and why, on the same line.
 - Never weaken a control to make a check pass: no unpinned actions, no

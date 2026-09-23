@@ -1,0 +1,29 @@
+# Project words for cspell (American English is the dictionary; this list
+# is names and jargon only, never a spelling variant). One word per line,
+# case-insensitive. Keep it grouped and short: a word that only appears
+# inside a code span does not need listing, cspell skips those.
+
+# People
+Simons
+lsimons
+
+# Products, tools, projects
+Beamer
+Cascadia
+Merriweather
+prek
+revealjs
+tinytex
+zizmor
+
+# Quarto YAML keys in the deck frontmatter
+aspectratio
+fonttheme
+mainfont
+monofont
+sansfont
+
+# Jargon
+extensionless
+frontmatter
+webfonts

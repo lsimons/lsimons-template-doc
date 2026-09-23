@@ -11,6 +11,7 @@
       "Bash(mise run site-slides *)",
       "Bash(mise run site-favicon)",
       "Bash(mise run lint)",
+      "Bash(mise run spell)",
       "Bash(mise run links)",
       "Bash(mise run ci)",
       "Bash(mise run audit)",

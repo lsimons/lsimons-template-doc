@@ -76,7 +76,8 @@ mise run site-check      # Astro type/content check
 mise run site-slides     # render the example slide deck to HTML + PDF
 mise run site-favicon    # regenerate the favicon + apple-touch-icon
 mise run lint            # prek hooks over every file + actionlint
-mise run ci              # full gate: install + lint + check + build
+mise run spell           # cspell (American English) over Markdown, MDX and Quarto
+mise run ci              # full gate: install + lint + spell + check + build
 mise run links           # lychee broken-link check (network; not in `ci`)
 mise run audit           # zizmor audit of workflows + dependabot config
 mise run ci-watch        # watch GitHub Actions for the current branch
@@ -103,6 +104,7 @@ lsimons-template-doc/
 ├── .mdformat.toml                # Markdown formatter settings
 ├── .lychee.toml                  # link-checker settings
 ├── commitlint.config.mjs         # Conventional Commits rules
+├── cspell.json                   # spell-check settings; words in cspell-words.txt
 ├── site/                         # the Astro Starlight site
 │   ├── src/content/docs/         # the pages
 │   ├── src/styles/custom.css     # the LSD Warm theme
@@ -136,7 +138,7 @@ Then restrict the `github-pages` environment's deployment branches to `main`
 Pages source itself, that is repository state rather than a file, so
 `Use this template` does not copy it and nothing in this repo can create it.
 `deploy.yml` only triggers on `push` to `main` and `workflow_dispatch`, both of
-which already require write access, so the branch policy is defence in depth
+which already require write access, so the branch policy is defense in depth
 rather than the only control.
 
 ## License
