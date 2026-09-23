@@ -4,7 +4,7 @@ version: 2
 updates:
   # Astro Starlight site dependencies (bun lockfile in site/)
   - package-ecosystem: "bun"
-    directory: "/docs"
+    directory: "/site"
     schedule:
       interval: "weekly"
     cooldown:
