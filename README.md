@@ -29,19 +29,19 @@ under <https://lsimons.github.io/>.
    instructions, and replace the landing page and guides in
    `site/src/content/docs/` with your content.
 
-4. Enable GitHub Pages with the source set to **GitHub Actions** — see
+4. Enable GitHub Pages with the source set to **GitHub Actions**. See
    [Publishing](#publishing) below. Nothing in this repo can do that for
    you; without it `deploy.yml` has nowhere to publish.
 
-5. Run `/setup` in your agent of choice. Repository settings — issue labels,
-   private vulnerability reporting, Dependabot security updates — are GitHub
+5. Run `/setup` in your agent of choice. Repository settings (issue labels,
+   private vulnerability reporting, Dependabot security updates) are GitHub
    state rather than files, so `Use this template` does not copy them and
    nothing in this repo can create them. `/setup` configures them against the
    new repo directly.
 
 ## What's included
 
-- **Astro Starlight** site under `site/`, with a splash landing page and an
+- **Astro Starlight** site under `site/`, with a splash landing page, and an
   explicit sidebar. `starlight-links-validator` fails the build on a dead
   internal link.
 - **LSD Warm theme** (`site/src/styles/custom.css`) shared with
@@ -54,7 +54,7 @@ under <https://lsimons.github.io/>.
   `deploy.yml` publishes to GitHub Pages on push to `main`. Actions are pinned
   to full-length commit SHAs, and a [zizmor](https://docs.zizmor.sh/) job audits
   the workflows and the Dependabot config.
-- **Pinned toolchain and tasks** in `.mise.toml` — every tool is pinned to an
+- **Pinned toolchain and tasks** in `.mise.toml`. Every tool is pinned to an
   exact version, and every repo task lives there (run with `mise run <task>`).
 - **Git hooks** (`prek.toml`) - mdformat, markdownlint, lychee, gitleaks, and
   commitlint. `mise run lint` runs the same hooks in CI, so they are enforced
@@ -77,7 +77,8 @@ mise run site-slides     # render the example slide deck to HTML + PDF
 mise run site-favicon    # regenerate the favicon + apple-touch-icon
 mise run lint            # prek hooks over every file + actionlint
 mise run spell           # cspell (American English) over Markdown, MDX and Quarto
-mise run ci              # full gate: install + lint + spell + check + build
+mise run prose           # vale prose lint over Markdown and MDX (after `mise run prose-sync` once)
+mise run ci              # full gate: install + lint + spell + prose + check + build
 mise run links           # lychee broken-link check (network; not in `ci`)
 mise run audit           # zizmor audit of workflows + dependabot config
 mise run ci-watch        # watch GitHub Actions for the current branch
@@ -105,6 +106,8 @@ lsimons-template-doc/
 ├── .lychee.toml                  # link-checker settings
 ├── commitlint.config.mjs         # Conventional Commits rules
 ├── cspell.json                   # spell-check settings; words in cspell-words.txt
+├── .vale.ini                     # prose lint rules; House style in .vale/styles/
+├── docs/prose/                   # which Vale rule runs where, and why
 ├── site/                         # the Astro Starlight site
 │   ├── src/content/docs/         # the pages
 │   ├── src/styles/custom.css     # the LSD Warm theme

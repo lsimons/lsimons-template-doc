@@ -8,29 +8,31 @@
 
 A template for building documentation sites: an [Astro Starlight](https://starlight.astro.build/) site (bun) with the shared "LSD Warm" theme, a landing page, and a [Quarto](https://quarto.org/) slide-deck setup. Published to GitHub Pages as a project site under <https://lsimons.github.io/>.
 
-## Quick Reference
+## Quick reference
 
 Every repo task lives in `.mise.toml`; `mise tasks` lists them. Run `mise trust`
 and `mise install` once per clone.
 
-| Task                           | What it does                                                |
-| ------------------------------ | ----------------------------------------------------------- |
-| `mise run init`                | Rename the template placeholders to the project name        |
-| `mise run site-install`        | Install the site dependencies (bun); may update `bun.lock`  |
-| `mise run site-install-frozen` | Same, but fails if `bun.lock` is out of date                |
-| `mise run site-dev`            | Dev server at <http://localhost:4321/lsimons-template-doc/> |
-| `mise run site-build`          | Build the static site into `site/dist`                      |
-| `mise run site-check`          | Astro type/content check                                    |
-| `mise run lint`                | prek hooks over every file + `actionlint`                   |
-| `mise run spell`               | `cspell` (American English) over Markdown, MDX and Quarto   |
-| `mise run ci`                  | Full gate: install + lint + spell + check + build           |
-| `mise run links`               | `lychee` broken-link check (network; not part of `ci`)      |
-| `mise run audit`               | `zizmor` audit of workflows + dependabot config             |
-| `mise run site-audit`          | `bun audit` of the site dependency tree (network)           |
-| `mise run site-slides`         | Render the example `.qmd` deck to HTML + PDF                |
-| `mise run site-favicon`        | Regenerate the favicon + apple-touch-icon                   |
-| `mise run site-clean`          | Remove build artifacts                                      |
-| `mise run ci-watch`            | Watch GitHub Actions for the current branch                 |
+| Task                           | What it does                                                         |
+| ------------------------------ | -------------------------------------------------------------------- |
+| `mise run init`                | Rename the template placeholders to the project name                 |
+| `mise run site-install`        | Install the site dependencies (bun); may update `bun.lock`           |
+| `mise run site-install-frozen` | Same, but fails if `bun.lock` is out of date                         |
+| `mise run site-dev`            | Dev server at <http://localhost:4321/lsimons-template-doc/>          |
+| `mise run site-build`          | Build the static site into `site/dist`                               |
+| `mise run site-check`          | Astro type/content check                                             |
+| `mise run lint`                | prek hooks over every file + `actionlint`                            |
+| `mise run spell`               | `cspell` (American English) over Markdown, MDX, and Quarto           |
+| `mise run prose`               | `vale` prose lint over Markdown and MDX; errors gate, warnings print |
+| `mise run prose-sync`          | Fetch the pinned Vale style packages (network)                       |
+| `mise run ci`                  | Full gate: install + lint + spell + prose + check + build            |
+| `mise run links`               | `lychee` broken-link check (network; not part of `ci`)               |
+| `mise run audit`               | `zizmor` audit of workflows + Dependabot config                      |
+| `mise run site-audit`          | `bun audit` of the site dependency tree (network)                    |
+| `mise run site-slides`         | Render the example `.qmd` deck to HTML + PDF                         |
+| `mise run site-favicon`        | Regenerate the favicon + apple-touch-icon                            |
+| `mise run site-clean`          | Remove build artifacts                                               |
+| `mise run ci-watch`            | Watch GitHub Actions for the current branch                          |
 
 Also available: `site-preview`, `site-browser`, and
 `mise run site-screenshot out.png /lsimons-template-doc/`.
@@ -57,11 +59,17 @@ must include the base path.
   - `astro.config.mjs` - site/base, the sidebar, the slide redirect, and the
     rehype base-link plugin.
 - `docs/` - specs, plans, and design notes that are not part of the site.
+  `docs/prose/README.md` records which Vale rule runs where and why.
+- `.vale.ini` - the prose lint: pinned style packages, the rules that gate
+  and the rules that only warn. `.vale/styles/House/` is the project's own
+  style and `.vale/styles/config/vocabularies/House/accept.txt` the
+  canonical casing of names.
+- `cspell.json` + `cspell-words.txt` - spelling (American English).
 - `scripts/init.mjs` - renames the template placeholders to your project.
 - `.mise.toml` - pinned tools and the dev/build tasks (run with `mise run <task>`).
 - `prek.toml` - git hooks (mdformat, markdownlint, lychee, gitleaks,
   commitlint); `prek install -t pre-commit -t commit-msg` once per clone.
-- `.github/workflows/ci.yml` lints, astro-checks and builds on push/PR;
+- `.github/workflows/ci.yml` lints, runs the Astro check, and builds on push/PR;
   `deploy.yml` publishes `site/dist` to GitHub Pages on push to `main`. The
   Pages source must be set to "GitHub Actions" (not "Deploy from a branch").
   CI does not run Quarto - the slide outputs are committed.
@@ -74,7 +82,7 @@ must include the base path.
   runs, in the same order.
 - Internal links are root-relative; the rehype plugin adds the base path.
   `starlight-links-validator` fails `mise run site-build` on a dead one, so
-  the build is the check — do not disable it.
+  the build is the check. Do not disable it.
 - `mise run links` (lychee) checks *external* URLs only; internal ones
   resolve against the published origin, which `.lychee.toml` excludes. It is
   not part of `ci` because it is a network call that flakes.
@@ -84,31 +92,60 @@ must include the base path.
   names and jargon to `cspell-words.txt`, grouped, one per line; never a
   British spelling. Inline code spans are skipped, so identifiers need no
   entry.
-- No unexplained rule disables in `.markdownlint-cli2.jsonc` — say which
+- Vale (`mise run prose`): errors fail the build, style warnings print and
+  are the house style. Fix a warning by rewriting unless the rewrite reads
+  worse. The vocabulary in
+  `.vale/styles/config/vocabularies/House/accept.txt` holds the canonical
+  casing of names, and every entry has its casing enforced everywhere, so
+  common words never go in. `House.Quotes`: a comma or period that isn't
+  part of the quoted text goes *outside* the closing quote. Adding or
+  moving a rule is a decision; record it in `docs/prose/README.md`.
+- No unexplained rule disables in `.markdownlint-cli2.jsonc`: say which
   files and why, on the same line.
 - Never weaken a control to make a check pass: no unpinned actions, no
   dropped `prek.toml` hooks, no `.lychee.toml` exclusions for URLs that
   are genuinely broken.
+
+**Voice:**
+
+Much of the text here is written by agents, and agent prose has tells. The
+reader shouldn't be able to hear them. `mise run prose` flags the patterns
+below after the fact. Write so that it has nothing to say.
+
+- Plain words for plain things: `use`, not `utilize`; `so`, not
+  `consequently`. Common words and plain sentence structure over idiom.
+- No em-dashes and no `--` in prose. Use a comma, a period, or parentheses.
+- No `delve`, `robust`, `seamless`, `leverage`, `landscape`, `journey`,
+  no `It's worth noting`, no `In conclusion`, no `I hope this helps`, no
+  `Let's unpack`, no `The result? ...`.
+- Don't announce a count and then list (`Three things matter: ...`). Give
+  the list, or make the count the point.
+- Headings in sentence case, with no closing period. No listicle or
+  marketing headings (`Key takeaways`, `Why this matters`).
+- Present tense over `will`. The Oxford comma. `For example`, not `e.g.`.
+  No `currently` or `latest`: they rot. No exclamation points.
+- A comma or period that isn't part of a quoted text goes outside the
+  closing quote.
 
 **Supply chain:**
 
 - `site/bun.lock` is committed and must stay in the tree. `mise run ci`
   and CI install with `site-install-frozen`; use `mise run site-install`
   when deliberately changing dependencies, and commit the result.
-- Dependencies in `site/package.json` stay as ranges — `bun.lock` is the
-  pin, and dependabot moves the constraint.
+- Dependencies in `site/package.json` stay as ranges. `bun.lock` is the
+  pin, and Dependabot moves the constraint.
 - `mise run site-audit` (`bun audit`) must be clean. It is not in
   `mise run ci` because it is a network call, like `links`.
 - Fix an advisory in a *transitive* package with the `overrides` block in
-  `site/package.json` — neither `bun update` nor dependabot will lift a
+  `site/package.json`, because neither `bun update` nor Dependabot lifts a
   nested resolution. Keep each entry inside the range its parents already
   ask for, and drop it once their own releases move past it.
 - Pin GitHub Actions to full-length commit SHAs; `zizmor` enforces it.
 - Every `.mise.toml` tool and every `prek.toml`
   `additional_dependencies` entry is exact-pinned and invisible to
-  dependabot; refresh with `mise up` and read the diff.
+  Dependabot; refresh with `mise up` and read the diff.
 
-## Commit Message Convention
+## Commit message convention
 
 Follow [Conventional Commits](https://conventionalcommits.org/):
 
@@ -116,12 +153,12 @@ Follow [Conventional Commits](https://conventionalcommits.org/):
 
 **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `build`, `ci`, `perf`, `revert`, `improvement`, `chore`
 
-## Session Completion
+## Session completion
 
 Work is not complete until every change is committed, pushed, and CI passes.
 
 1. `mise run ci` (or the tasks that changed)
-2. Commit everything — do not leave the working tree dirty
+2. Commit everything. Do not leave the working tree dirty
 3. `git pull --rebase && git push`
 4. `mise run ci-watch`; on failure `gh run view --log-failed`, fix, repeat
 

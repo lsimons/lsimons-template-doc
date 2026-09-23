@@ -24,6 +24,15 @@ monofont
 sansfont
 
 # Jargon
+listicle
 extensionless
 frontmatter
 webfonts
+
+# Vale rule names quoted in docs/prose/README.md
+Airlinese
+AMPM
+Nonwords
+Oxymorons
+tricolons
+Uncomparables

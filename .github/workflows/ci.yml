@@ -62,6 +62,13 @@ jobs:
       - name: Spell check
         run: mise run spell
 
+      # The synced Vale styles are gitignored; fetch them before linting.
+      - name: Fetch Vale styles
+        run: mise run prose-sync
+
+      - name: Prose lint
+        run: mise run prose
+
       - name: Check (Astro type/content check)
         run: mise run site-check
 

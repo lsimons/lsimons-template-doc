@@ -1,4 +1,4 @@
-# docs/
+# Repository docs
 
 Prose that is not part of the published site: specs, plans, design notes,
 and agent-facing process docs. The Astro Starlight site lives in `site/`.

@@ -86,3 +86,13 @@ mise.local.toml
 # Only per-user state and scratch worktrees are ignored.
 .claude/settings.local.json
 .claude/worktrees
+
+# Vale styles fetched by `mise run prose-sync` from the release URLs pinned
+# in .vale.ini. House/ and config/vocabularies/ are the project's own and
+# stay tracked.
+.vale/styles/write-good/
+.vale/styles/proselint/
+.vale/styles/Google/
+.vale/styles/ai-tells/
+# Shipped inside the ai-tells zip.
+.vale/styles/config/templates/

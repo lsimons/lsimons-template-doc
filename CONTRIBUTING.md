@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for investing your time in contributing to our project!
+Thank you for investing your time in contributing to our project.
 
 Any contributions you make are governed by our [License](LICENSE).
 
@@ -58,4 +58,4 @@ prek install -t pre-commit -t commit-msg
 `mise run lint` runs the same hooks over every file, so CI catches what an
 uninstalled hook would have missed.
 
-Since this is a small hobby project, your contribution may not be noticed for a while if we are busy elsewhere. Sorry!
+Since this is a small hobby project, your contribution may not be noticed for a while if we are busy elsewhere. Sorry about that.
