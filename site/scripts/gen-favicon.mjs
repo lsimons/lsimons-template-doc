@@ -3,7 +3,7 @@
 // A simple "document" glyph: an accent-coloured rounded page with a few text
 // lines, legible at favicon sizes. Swap this out for your own brand mark.
 //
-//   cd docs && bun run scripts/gen-favicon.mjs
+//   cd site && bun run scripts/gen-favicon.mjs
 //
 // Writes public/favicon.svg and public/apple-touch-icon.png.
 import sharp from 'sharp';

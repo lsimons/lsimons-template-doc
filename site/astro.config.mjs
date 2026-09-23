@@ -92,7 +92,7 @@ export default defineConfig({
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/lsimons/lsimons-template-doc' },
 			],
-			editLink: { baseUrl: 'https://github.com/lsimons/lsimons-template-doc/edit/main/docs/' },
+			editLink: { baseUrl: 'https://github.com/lsimons/lsimons-template-doc/edit/main/site/' },
 			customCss: ['./src/styles/custom.css'],
 			sidebar: [
 				{

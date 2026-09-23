@@ -38,19 +38,19 @@ title) across the repo. See `scripts/init.mjs` for exactly what it touches.
 ## Develop
 
 ```bash
-mise run docs-install   # install site dependencies (bun)
-mise run docs-dev       # dev server at http://localhost:4321/lsimons-template-doc/
-mise run docs-build     # build the static site into docs/dist
-mise run docs-check     # Astro type/content check
+mise run site-install   # install site dependencies (bun)
+mise run site-dev       # dev server at http://localhost:4321/lsimons-template-doc/
+mise run site-build     # build the static site into site/dist
+mise run site-check     # Astro type/content check
 mise run lint           # prek hooks over every file + actionlint
 mise run ci             # the full gate: install + lint + check + build
 ```
 
-`mise run ci` is what CI runs. `docs-build` also validates every internal
+`mise run ci` is what CI runs. `site-build` also validates every internal
 link (via `starlight-links-validator`) and fails on a dead one.
 
-Content lives in `docs/src/content/docs/`; static assets and downloads in
-`docs/public/`. Edit `docs/astro.config.mjs` to change the title, sidebar, and
+Content lives in `site/src/content/docs/`; static assets and downloads in
+`site/public/`. Edit `site/astro.config.mjs` to change the title, sidebar, and
 social links.
 
 ## Publish
@@ -59,7 +59,7 @@ Enable GitHub Pages for your repo with the source set to **GitHub Actions**
 (not "Deploy from a branch"). After that, every push to `main` builds and
 deploys the site via `.github/workflows/deploy.yml`. Project sites live under a
 subpath of `https://lsimons.github.io` matching the repo name - that subpath is
-the `base` set in `docs/astro.config.mjs`.
+the `base` set in `site/astro.config.mjs`.
 
 ## Next steps
 

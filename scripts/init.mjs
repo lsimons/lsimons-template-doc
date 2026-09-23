@@ -126,7 +126,7 @@ function main() {
 	}
 	console.log('');
 	console.log('Next: rename the example slide deck if you like, then');
-	console.log('  mise run docs-install && mise run docs-dev');
+	console.log('  mise run site-install && mise run site-dev');
 }
 
 main();

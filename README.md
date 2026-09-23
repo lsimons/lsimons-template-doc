@@ -17,7 +17,7 @@ under <https://lsimons.github.io/>.
    mise install                       # pin + install bun, quarto, hooks
    mise run init                      # infer the name from the git remote / directory
    # or: mise run init --name my-docs --title "My Docs"
-   mise run docs-install              # install the site dependencies (bun)
+   mise run site-install              # install the site dependencies (bun)
    prek install -t pre-commit -t commit-msg   # once per clone: git hooks
    ```
 
@@ -27,7 +27,7 @@ under <https://lsimons.github.io/>.
 
 3. Update `AGENTS.md` (and the `CLAUDE.md` symlink) with project-specific
    instructions, and replace the landing page and guides in
-   `docs/src/content/docs/` with your content.
+   `site/src/content/docs/` with your content.
 
 4. Enable GitHub Pages with the source set to **GitHub Actions** — see
    [Publishing](#publishing) below. Nothing in this repo can do that for
@@ -41,15 +41,15 @@ under <https://lsimons.github.io/>.
 
 ## What's included
 
-- **Astro Starlight** site under `docs/`, with a splash landing page and an
+- **Astro Starlight** site under `site/`, with a splash landing page and an
   explicit sidebar. `starlight-links-validator` fails the build on a dead
   internal link.
-- **LSD Warm theme** (`docs/src/styles/custom.css`) shared with
+- **LSD Warm theme** (`site/src/styles/custom.css`) shared with
   [lsimons.github.io](https://lsimons.github.io), Merriweather webfonts, and a
   clickable-card landing layout.
 - **Quarto slide decks** - author in `.qmd`, render to reveal.js **HTML** and
   Beamer **PDF**; a worked example lives at
-  `docs/public/presentations/example.qmd`.
+  `site/public/presentations/example.qmd`.
 - **GitHub Actions** - `ci.yml` lints, type-checks and builds on push/PR;
   `deploy.yml` publishes to GitHub Pages on push to `main`. Actions are pinned
   to full-length commit SHAs, and a [zizmor](https://docs.zizmor.sh/) job audits
@@ -69,12 +69,12 @@ under <https://lsimons.github.io/>.
 ```bash
 mise trust               # once per clone
 mise install             # one-time: pin + install the toolchain
-mise run docs-install    # install the site dependencies (bun)
-mise run docs-dev        # dev server at http://localhost:4321/lsimons-template-doc/
-mise run docs-build      # build the static site into docs/dist
-mise run docs-check      # Astro type/content check
-mise run docs-slides     # render the example slide deck to HTML + PDF
-mise run docs-favicon    # regenerate the favicon + apple-touch-icon
+mise run site-install    # install the site dependencies (bun)
+mise run site-dev        # dev server at http://localhost:4321/lsimons-template-doc/
+mise run site-build      # build the static site into site/dist
+mise run site-check      # Astro type/content check
+mise run site-slides     # render the example slide deck to HTML + PDF
+mise run site-favicon    # regenerate the favicon + apple-touch-icon
 mise run lint            # prek hooks over every file + actionlint
 mise run ci              # full gate: install + lint + check + build
 mise run links           # lychee broken-link check (network; not in `ci`)
@@ -84,8 +84,8 @@ mise run ci-watch        # watch GitHub Actions for the current branch
 
 `mise tasks` lists them all, including the screenshot helpers.
 
-Content lives in `docs/src/content/docs/`; static assets and slide decks in
-`docs/public/`.
+Content lives in `site/src/content/docs/`; static assets and slide decks in
+`site/public/`.
 
 ## Project structure
 
@@ -103,13 +103,14 @@ lsimons-template-doc/
 ├── .mdformat.toml                # Markdown formatter settings
 ├── .lychee.toml                  # link-checker settings
 ├── commitlint.config.mjs         # Conventional Commits rules
-├── docs/                         # the Astro Starlight site
+├── site/                         # the Astro Starlight site
 │   ├── src/content/docs/         # the pages
 │   ├── src/styles/custom.css     # the LSD Warm theme
 │   ├── public/presentations/     # Quarto decks + committed HTML/PDF output
 │   ├── astro.config.mjs          # site, base path, sidebar, rehype plugin
 │   ├── package.json              # site dependencies (ranges; bun.lock pins them)
 │   └── bun.lock                  # committed; never gitignore this
+├── docs/                         # specs, plans, design notes (not published)
 ├── scripts/init.mjs              # rename-to-your-project helper
 ├── AGENTS.md                     # AI agent instructions
 ├── CLAUDE.md -> AGENTS.md        # Claude Code compatibility
@@ -127,7 +128,7 @@ the target path.
 
 Enable GitHub Pages with the source set to **GitHub Actions** (not "Deploy from
 a branch"). A push to `main` then builds and deploys the site. The deploy base
-path (set as `base` in `docs/astro.config.mjs`) matches the repo name, so the
+path (set as `base` in `site/astro.config.mjs`) matches the repo name, so the
 site lands at `https://lsimons.github.io/<repo>/`.
 
 Then restrict the `github-pages` environment's deployment branches to `main`
