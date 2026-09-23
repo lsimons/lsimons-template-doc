@@ -101,22 +101,20 @@ run = "bun audit"
 description = "Remove build artifacts"
 run = "rm -rf site/dist site/.astro"
 
+# The Chromium build Playwright drives for `site-screenshot`. `--with-deps`
+# adds the system libraries the browser needs on a Linux CI runner; on macOS
+# it is a no-op.
 [tasks.site-browser]
-description = "Install the Chromium browser Playwright uses for screenshots"
+description = "Install the Chromium browser Playwright uses for site-screenshot"
 dir = "site"
-run = "bunx playwright install chromium"
+run = "bunx playwright install --with-deps chromium"
 
 [tasks.site-screenshot]
 description = "Build, serve, and screenshot a page (args: [out] [path]). Needs `mise run site-browser` once."
 dir = "site"
 run = """
-out="{{arg(name='out', default='out.png')}}"
-path="{{arg(name='path', default='/lsimons-template-doc/')}}"
 bun run build
-bun run preview --port 4321 > /tmp/astro-preview.log 2>&1 &
-sleep 4
-bunx playwright screenshot --viewport-size=1280,800 "http://localhost:4321${path}" "$out"
-status=$?; pkill -f "astro preview" || true; exit $status
+bun scripts/screenshot.mjs "{{arg(name='out', default='out.png')}}" "{{arg(name='path', default='/lsimons-template-doc/')}}"
 """
 
 # The prek hooks (mdformat, markdownlint, gitleaks, the pre-commit-hooks
