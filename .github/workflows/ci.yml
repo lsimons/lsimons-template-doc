@@ -100,7 +100,7 @@ jobs:
           # Pin the version: the action's default is "latest", so a zizmor
           # release could turn CI red on its own. Keep in step with
           # `zizmor` in .mise.toml, which is what `mise run audit` uses.
-          version: "1.30.1"
+          version: "1.31.1"
           # `collect` is deliberately unset. The action's default already
           # covers workflows, composite actions, .github/dependabot.yml and
           # .pre-commit-config.yaml, while honouring .gitignore. Do not set
