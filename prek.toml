@@ -55,7 +55,7 @@ hooks = [
       "mdit-py-plugins==0.6.1",
       "mdurl==0.1.2",
       "ruamel.yaml==0.19.1",
-      "wcwidth==0.9.1",
+      "wcwidth==0.9.4",
     ],
     # .mdx uses JSX-flavoured markdown that mdformat mangles; skip it.
     exclude = '\.mdx$'
