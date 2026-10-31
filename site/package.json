@@ -11,24 +11,26 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "7.3.1",
-    "@astrojs/starlight": "0.42.5",
-    "astro": "7.3.5",
+    "@astrojs/markdown-remark": "7.3.4",
+    "@astrojs/starlight": "0.42.7",
+    "astro": "7.4.2",
     "sharp": "0.35.5"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
-    "@commitlint/cli": "21.2.3",
-    "@commitlint/config-conventional": "21.2.3",
-    "cspell": "10.3.6",
-    "markdownlint-cli2": "0.23.3",
-    "playwright": "1.63.0",
-    "starlight-links-validator": "0.26.0",
+    "@astrojs/check": "0.9.12",
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
+    "cspell": "10.4.0",
+    "markdownlint-cli2": "0.24.0",
+    "playwright": "1.64.1",
+    "starlight-links-validator": "0.27.0",
     "typescript": "6.0.3"
   },
   "overrides": {
-    "fast-uri": "3.1.7",
-    "nanoid": "3.3.19",
-    "js-yaml": "4.3.2"
+    "fast-uri": "3.1.9",
+    "nanoid": "3.3.20",
+    "js-yaml": "4.3.2",
+    "katex": "0.18.11",
+    "re2js": "2.8.8"
   }
 }
