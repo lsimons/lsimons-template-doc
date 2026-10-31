@@ -28,7 +28,7 @@ and `mise install` once per clone.
 | `mise run ci`                  | Full gate: install + lint + spell + prose + check + build                 |
 | `mise run links`               | `lychee` broken-link check (network; not part of `ci`)                    |
 | `mise run audit`               | `zizmor` audit of workflows + Dependabot config                           |
-| `mise run site-audit`          | `bun audit` of the site dependency tree (network)                         |
+| `mise run site-audit`          | `bun audit` of the site dependency tree (network; own CI job)             |
 | `mise run site-slides`         | Render the example `.qmd` deck to HTML + PDF                              |
 | `mise run site-favicon`        | Regenerate the favicon + apple-touch-icon                                 |
 | `mise run site-clean`          | Remove build artifacts                                                    |
@@ -138,8 +138,9 @@ below after the fact. Write so that it has nothing to say.
   when deliberately changing dependencies, and commit the result.
 - Dependencies in `site/package.json` stay as ranges. `bun.lock` is the
   pin, and Dependabot moves the constraint.
-- `mise run site-audit` (`bun audit`) must be clean. It is not in
-  `mise run ci` because it is a network call, like `links`.
+- `mise run site-audit` (`bun audit`) must be clean. CI runs it as its
+  own `site-audit` job. It is not in `mise run ci` because it is a network
+  call, like `links`, so run it locally before pushing a dependency change.
 - Fix an advisory in a *transitive* package with the `overrides` block in
   `site/package.json`, because neither `bun update` nor Dependabot lifts a
   nested resolution. Keep each entry inside the range its parents already

@@ -110,10 +110,14 @@ dir = "site"
 run = "bun run scripts/gen-favicon.mjs"
 
 # Not part of `ci`: this hits the registry's advisory API, so it flakes on
-# network the same way `links` does. Anything it reports gets pinned up
-# through the `overrides` block in site/package.json — see AGENTS.md.
+# network the same way `links` does. The workflow runs it as its own
+# `site-audit` job instead, so a newly published advisory against an
+# unchanged tree goes red without implying the build broke. It needs the
+# frozen site install first (`site-install-frozen`). Anything it reports
+# gets pinned up through the `overrides` block in site/package.json — see
+# AGENTS.md.
 [tasks.site-audit]
-description = "bun audit of the site dependency tree (network; not part of `ci`)"
+description = "bun audit of the site dependency tree (network; own CI job, not part of `ci`)"
 dir = "site"
 run = "bun audit"
 

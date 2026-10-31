@@ -83,6 +83,48 @@ jobs:
       - name: Build
         run: mise run site-build
 
+  site-audit:
+    name: Site dependency audit (bun audit)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up mise
+        uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5.2.2
+        with:
+          # Pinned like the `build` job; see the comment there. Must match
+          # `min_version` in .mise.toml; bump the three together.
+          version: 2026.10.18
+          sha256: e97c38973336aa2ff350fea50f47b412b266fe263b102b7200ff1e9b118c6942
+          # `bun audit` needs only bun (mise adds --locked itself).
+          install_args: bun
+          install: true
+          cache: true
+
+      - name: Cache bun install cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('site/bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+
+      # The frozen task, as in `build`: the audit must see exactly the tree
+      # bun.lock pins, not one re-resolved on the runner.
+      - name: Install
+        run: mise run site-install-frozen
+
+      # Its own job rather than a step in `build`: it calls the registry's
+      # advisory API, and a newly published advisory against an unchanged
+      # tree should go red here without implying the build broke. It is
+      # also not in `mise run ci`, for the same network reason as `links`.
+      - name: Audit site dependencies (bun audit)
+        run: mise run site-audit
+
   zizmor:
     name: Zizmor (GitHub Actions audit)
     runs-on: ubuntu-latest
