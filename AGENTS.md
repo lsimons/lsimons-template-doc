@@ -136,15 +136,21 @@ below after the fact. Write so that it has nothing to say.
 - `site/bun.lock` is committed and must stay in the tree. `mise run ci`
   and CI install with `site-install-frozen`; use `mise run site-install`
   when deliberately changing dependencies, and commit the result.
-- Dependencies in `site/package.json` stay as ranges. `bun.lock` is the
-  pin, and Dependabot moves the constraint.
+- Dependencies in `site/package.json` are exact-pinned (bare `x.y.z`, no
+  `^` or `~`), the same as every `.mise.toml` tool. `bun.lock` pins the
+  transitive graph. Dependabot bumps the exact pin.
 - `mise run site-audit` (`bun audit`) must be clean. CI runs it as its
   own `site-audit` job. It is not in `mise run ci` because it is a network
   call, like `links`, so run it locally before pushing a dependency change.
 - Fix an advisory in a *transitive* package with the `overrides` block in
   `site/package.json`, because neither `bun update` nor Dependabot lifts a
   nested resolution. Keep each entry inside the range its parents already
-  ask for, and drop it once their own releases move past it.
+  ask for where a fixed release exists there, and drop it once their own
+  releases move past it. The one exception is `katex`: no fixed 0.16.x
+  exists, so the override goes to 0.18.x although
+  `micromark-extension-math` asks for `^0.16.0`. markdownlint only uses
+  the math syntax extension and never calls katex to render, and lint
+  passes.
 - Pin GitHub Actions to full-length commit SHAs; `zizmor` enforces it.
 - Every `.mise.toml` tool is exact-pinned and invisible to Dependabot;
   refresh with `mise up` and read the diff. mise itself is pinned too:
