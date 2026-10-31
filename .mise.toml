@@ -7,7 +7,7 @@
 # its sha256) in `jdx/mise-action`'s inputs: mise is the binary that
 # enforces mise.lock and minimum_release_age, so it is pinned like
 # everything it installs. Bump the three together.
-min_version = "2026.9.12"
+min_version = "2026.10.18"
 
 [settings]
 minimum_release_age = "7d"
