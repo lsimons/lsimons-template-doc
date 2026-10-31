@@ -50,9 +50,10 @@ under <https://lsimons.github.io/>.
 - **Quarto slide decks** - author in `.qmd`, render to reveal.js **HTML** and
   Beamer **PDF**; a worked example lives at
   `site/public/presentations/example.qmd`.
-- **GitHub Actions** - `ci.yml` lints, type-checks and builds on push/PR;
-  `deploy.yml` publishes to GitHub Pages on push to `main`. Actions are pinned
-  to full-length commit SHAs, and a [zizmor](https://docs.zizmor.sh/) job audits
+- **GitHub Actions** - `ci.yml` lints, type-checks and builds on push/PR, and
+  runs `bun audit` over the site dependencies as a separate job; `deploy.yml`
+  publishes to GitHub Pages on push to `main`. Actions are pinned to
+  full-length commit SHAs, and a [zizmor](https://docs.zizmor.sh/) job audits
   the workflows and the Dependabot config.
 - **Pinned toolchain and tasks** in `.mise.toml`. Every tool is pinned to an
   exact version, and every repo task lives there (run with `mise run <task>`).
@@ -84,6 +85,7 @@ mise run prose           # vale prose lint over Markdown and MDX (after `mise ru
 mise run ci              # full gate: install + lint + spell + prose + check + build
 mise run links           # lychee broken-link check (network; not in `ci`)
 mise run audit           # zizmor audit of workflows + dependabot config
+mise run site-audit      # bun audit of the site dependency tree (network; not in `ci`)
 mise run ci-watch        # watch GitHub Actions for the current branch
 ```
 
@@ -96,7 +98,7 @@ Content lives in `site/src/content/docs/`; static assets and slide decks in
 
 ```
 lsimons-template-doc/
-├── .github/workflows/ci.yml      # lint + Astro check + build, and the zizmor audit
+├── .github/workflows/ci.yml      # lint + Astro check + build, bun audit, and the zizmor audit
 ├── .github/workflows/deploy.yml  # build and publish to GitHub Pages
 ├── .github/dependabot.yml        # weekly bun + github-actions updates
 ├── .claude/settings.json         # shared agent permissions (tracked on purpose)
