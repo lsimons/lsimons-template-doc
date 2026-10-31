@@ -149,7 +149,7 @@ below after the fact. Write so that it has nothing to say.
   releases move past it. The one exception is `katex`: no fixed 0.16.x
   exists, so the override goes to 0.18.x although
   `micromark-extension-math` asks for `^0.16.0`. markdownlint only uses
-  the math syntax extension and never calls katex to render, and lint
+  the math syntax extension and never calls `katex` to render, and lint
   passes.
 - Pin GitHub Actions to full-length commit SHAs; `zizmor` enforces it.
 - Every `.mise.toml` tool is exact-pinned and invisible to Dependabot;
