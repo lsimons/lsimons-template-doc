@@ -26,8 +26,8 @@ lockfile = true
 bun = "1.4.4"
 gitleaks = "8.30.1"
 lychee = "0.24.2"
-prek = "0.5.7"
-"aqua:quarto-dev/quarto-cli" = "1.10.19"
+prek = "0.5.9"
+"aqua:quarto-dev/quarto-cli" = "1.11.9"
 # Used by `mise run audit`; must match `version:` in the workflow's zizmor
 # job. Bump them together.
 zizmor = "1.31.1"
@@ -42,7 +42,7 @@ shellcheck = "0.11.0"
 # bun.lock pins the whole tree, and `mise run spell` runs it from there.
 # Prose lint (`mise run prose`). Its style packages are pinned by URL in
 # .vale.ini and fetched by `mise run prose-sync`.
-vale = "3.25.1"
+vale = "3.26.0"
 
 [tasks.init]
 description = "Rename this template to a new project (see scripts/init.mjs)"

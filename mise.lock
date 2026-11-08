@@ -74,74 +74,74 @@ url_api = "https://api.github.com/repos/rhysd/actionlint/releases/assets/3849249
 provenance = "github-attestations"
 
 [[tools."aqua:quarto-dev/quarto-cli"]]
-version = "1.10.19"
+version = "1.11.9"
 backend = "aqua:quarto-dev/quarto-cli"
-specifiers = ["1.10.19"]
+specifiers = ["1.11.9"]
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.linux-arm64"]
-checksum = "sha256:bba2bb55add74c754c313905df42b0f45a8250aee2110a4fce7f83020bfe1b8f"
+checksum = "sha256:8a96da89026c8cba0fc2607f62d99836eae8c5b65465b5d476af16f54c10d191"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010383"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632706"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:bba2bb55add74c754c313905df42b0f45a8250aee2110a4fce7f83020bfe1b8f"
+checksum = "sha256:8a96da89026c8cba0fc2607f62d99836eae8c5b65465b5d476af16f54c10d191"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010383"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632706"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.linux-x64"]
-checksum = "sha256:8e38c2b2df6a6dbd369ea16e15acded6894545258d13a02f777f81ad18fd7973"
+checksum = "sha256:9d037baa3b38ffac7217edca1d2e53760b0fab4d5749220740a32056e03a1530"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010397"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632716"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.linux-x64-baseline"]
-checksum = "sha256:8e38c2b2df6a6dbd369ea16e15acded6894545258d13a02f777f81ad18fd7973"
+checksum = "sha256:9d037baa3b38ffac7217edca1d2e53760b0fab4d5749220740a32056e03a1530"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010397"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632716"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:8e38c2b2df6a6dbd369ea16e15acded6894545258d13a02f777f81ad18fd7973"
+checksum = "sha256:9d037baa3b38ffac7217edca1d2e53760b0fab4d5749220740a32056e03a1530"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010397"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632716"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:8e38c2b2df6a6dbd369ea16e15acded6894545258d13a02f777f81ad18fd7973"
+checksum = "sha256:9d037baa3b38ffac7217edca1d2e53760b0fab4d5749220740a32056e03a1530"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010397"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632716"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.macos-arm64"]
-checksum = "sha256:c617db5422824e506750573ea94a1e26a475532adfe18c8fea310816ced97f47"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-macos.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010388"
+checksum = "sha256:9fc24881f637612d80edbf16d62f01001fc7945a9a0c6ac247199002901e0a6d"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-macos.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632717"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.macos-x64"]
-checksum = "sha256:c617db5422824e506750573ea94a1e26a475532adfe18c8fea310816ced97f47"
+checksum = "sha256:9fc24881f637612d80edbf16d62f01001fc7945a9a0c6ac247199002901e0a6d"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-macos.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010388"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-macos.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632717"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.macos-x64-baseline"]
-checksum = "sha256:c617db5422824e506750573ea94a1e26a475532adfe18c8fea310816ced97f47"
+checksum = "sha256:9fc24881f637612d80edbf16d62f01001fc7945a9a0c6ac247199002901e0a6d"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-macos.tar.gz"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010388"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-macos.tar.gz"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632717"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.windows-x64"]
-checksum = "sha256:a9c62e4fef34ea05d4dd9175d905f80f0542414a1ae17a9d45698f6646c01173"
+checksum = "sha256:eda220a2f39c392f622049de013ddf7b4dfdf019ba877f251be14ce43e5734d1"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-win.zip"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010387"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-win.zip"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632712"
 
 [tools."aqua:quarto-dev/quarto-cli"."platforms.windows-x64-baseline"]
-checksum = "sha256:a9c62e4fef34ea05d4dd9175d905f80f0542414a1ae17a9d45698f6646c01173"
+checksum = "sha256:eda220a2f39c392f622049de013ddf7b4dfdf019ba877f251be14ce43e5734d1"
 checksum_source = "mise-versions"
-url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-win.zip"
-url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/615010387"
+url = "https://github.com/quarto-dev/quarto-cli/releases/download/v1.11.9/quarto-1.11.9-win.zip"
+url_api = "https://api.github.com/repos/quarto-dev/quarto-cli/releases/assets/692632712"
 
 [[tools.bun]]
 version = "1.4.4"
@@ -313,74 +313,74 @@ url = "https://github.com/lycheeverse/lychee/releases/download/lychee-v0.24.2/ly
 url_api = "https://api.github.com/repos/lycheeverse/lychee/releases/assets/409959491"
 
 [[tools.prek]]
-version = "0.5.7"
+version = "0.5.9"
 backend = "aqua:j178/prek"
-specifiers = ["0.5.7"]
+specifiers = ["0.5.9"]
 
 [tools.prek."platforms.linux-arm64"]
-checksum = "sha256:98bdb31002ca42b61f4f6c746b2de351aee4e1f29c95f8dec8ec3b9a62929c1e"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929498"
+checksum = "sha256:cf9cb3eeb5537064c9d73d78313a79ee707f3faa340ca0db1f5646d7897bc7dd"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760439"
 provenance = "github-attestations"
 
 [tools.prek."platforms.linux-arm64-musl"]
-checksum = "sha256:022ddbaef649d83ab7e0cfde13400612b896b04cce338623205525560d47bcf6"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929502"
+checksum = "sha256:87a377330104591e50e91388164d8d4740f35e91475a6150c49bca7ed70d46aa"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760445"
 provenance = "github-attestations"
 
 [tools.prek."platforms.linux-x64"]
-checksum = "sha256:e238e5a6b4e384e8d18f33d3c3b1a329be0e1237f77ac6e021e641ddd3a2bab6"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929556"
+checksum = "sha256:2fee13923018dd517c19dba032ddcae8010cadfb81bc47e742ad5e8981a3f126"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760524"
 provenance = "github-attestations"
 
 [tools.prek."platforms.linux-x64-baseline"]
-checksum = "sha256:e238e5a6b4e384e8d18f33d3c3b1a329be0e1237f77ac6e021e641ddd3a2bab6"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929556"
+checksum = "sha256:2fee13923018dd517c19dba032ddcae8010cadfb81bc47e742ad5e8981a3f126"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760524"
 provenance = "github-attestations"
 
 [tools.prek."platforms.linux-x64-musl"]
-checksum = "sha256:25d6a0316125127aed3ad7010128884d7e7243c4ac06f084218b98dc20020ca9"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929599"
+checksum = "sha256:7b00ac6a6e4cbb5d1711cb759c1fc279281d1446317ebede513a4d03bf7a7e2c"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760529"
 provenance = "github-attestations"
 
 [tools.prek."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:25d6a0316125127aed3ad7010128884d7e7243c4ac06f084218b98dc20020ca9"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929599"
+checksum = "sha256:7b00ac6a6e4cbb5d1711cb759c1fc279281d1446317ebede513a4d03bf7a7e2c"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760529"
 provenance = "github-attestations"
 
 [tools.prek."platforms.macos-arm64"]
-checksum = "sha256:800c5b9c8239045bbdf4201957dd4175135e216e838c40a6ec1904ff18ebaf2c"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929480"
+checksum = "sha256:cc9020726b7c86cce420b75d70f48b9ffa161bb5095a99678c0a87218f48d493"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760404"
 provenance = "github-attestations"
 
 [tools.prek."platforms.macos-x64"]
-checksum = "sha256:12b65c6685fc44ff9130c0bf5dcb01be69c0c81d9a0709553fd369c3b2010815"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-x86_64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929524"
+checksum = "sha256:a7e6be8c62be36c5eda5cb70cc053b29e2941853dc0c3d859710f2651052d516"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760479"
 provenance = "github-attestations"
 
 [tools.prek."platforms.macos-x64-baseline"]
-checksum = "sha256:12b65c6685fc44ff9130c0bf5dcb01be69c0c81d9a0709553fd369c3b2010815"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-x86_64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929524"
+checksum = "sha256:a7e6be8c62be36c5eda5cb70cc053b29e2941853dc0c3d859710f2651052d516"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760479"
 provenance = "github-attestations"
 
 [tools.prek."platforms.windows-x64"]
-checksum = "sha256:50ccc606e19965585807c0a8be99da82eb4237c7c9df2539e5a83704d1f16a36"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929530"
+checksum = "sha256:b772063b6d9195c0647c0e73cfa258208d03b2b51abff115b76d24aefa189d0b"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760496"
 provenance = "github-attestations"
 
 [tools.prek."platforms.windows-x64-baseline"]
-checksum = "sha256:50ccc606e19965585807c0a8be99da82eb4237c7c9df2539e5a83704d1f16a36"
-url = "https://github.com/j178/prek/releases/download/v0.5.7/prek-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/j178/prek/releases/assets/660929530"
+checksum = "sha256:b772063b6d9195c0647c0e73cfa258208d03b2b51abff115b76d24aefa189d0b"
+url = "https://github.com/j178/prek/releases/download/v0.5.9/prek-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/j178/prek/releases/assets/691760496"
 provenance = "github-attestations"
 
 [[tools.shellcheck]]
@@ -444,75 +444,74 @@ url = "https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellche
 url_api = "https://api.github.com/repos/koalaman/shellcheck/releases/assets/279056944"
 
 [[tools.vale]]
-version = "3.25.1"
+version = "3.26.0"
 backend = "aqua:vale-cli/vale"
-specifiers = ["3.25.1"]
+specifiers = ["3.26.0"]
 
 [tools.vale."platforms.linux-arm64"]
-checksum = "sha256:2a69755b68118c612c455fc0c5ea1b9438519aa1c852e3fb303b3ad97141bbb0"
+checksum = "sha256:3154179f4611140c9af54a8b3bc6a90bc02b73fe6c1f635369604dde0490406d"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037026"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681932"
 
 [tools.vale."platforms.linux-arm64-musl"]
-checksum = "sha256:2a69755b68118c612c455fc0c5ea1b9438519aa1c852e3fb303b3ad97141bbb0"
+checksum = "sha256:3154179f4611140c9af54a8b3bc6a90bc02b73fe6c1f635369604dde0490406d"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037026"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681932"
 
 [tools.vale."platforms.linux-x64"]
-checksum = "sha256:4bf5c5176b682b1da0830f471584d3494f1c2e27ee3029e1ad6f6661d4962182"
+checksum = "sha256:22aa69a556558e4a9dfc63c17030777383d8d3c48dcdfad655fa98e839d666ed"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_Linux_64-bit.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037022"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_Linux_64-bit.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681930"
 
 [tools.vale."platforms.linux-x64-baseline"]
-checksum = "sha256:4bf5c5176b682b1da0830f471584d3494f1c2e27ee3029e1ad6f6661d4962182"
+checksum = "sha256:22aa69a556558e4a9dfc63c17030777383d8d3c48dcdfad655fa98e839d666ed"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_Linux_64-bit.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037022"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_Linux_64-bit.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681930"
 
 [tools.vale."platforms.linux-x64-musl"]
-checksum = "sha256:4bf5c5176b682b1da0830f471584d3494f1c2e27ee3029e1ad6f6661d4962182"
+checksum = "sha256:22aa69a556558e4a9dfc63c17030777383d8d3c48dcdfad655fa98e839d666ed"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_Linux_64-bit.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037022"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_Linux_64-bit.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681930"
 
 [tools.vale."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:4bf5c5176b682b1da0830f471584d3494f1c2e27ee3029e1ad6f6661d4962182"
+checksum = "sha256:22aa69a556558e4a9dfc63c17030777383d8d3c48dcdfad655fa98e839d666ed"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_Linux_64-bit.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037022"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_Linux_64-bit.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681930"
 
 [tools.vale."platforms.macos-arm64"]
-checksum = "sha256:fbcaa68d9b9e229b9c8dc918f209e93572ce943039700b7e04a423ff12f684cd"
-checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_macOS_arm64.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037030"
+checksum = "sha256:a6c3370f53bad93086c6b85f3163676e44e08049d69743afdcc13f3aab5b7482"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_macOS_arm64.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695682018"
 
 [tools.vale."platforms.macos-x64"]
-checksum = "sha256:e27097e84a812d45546de8d6a4ffa75538cab39c96f79b153b601240f8cefaf9"
+checksum = "sha256:df42b317be6ece6a6a70d06b952deec581d047046eb93ea4632f58da56a86ff9"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_macOS_64-bit.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037025"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_macOS_64-bit.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681994"
 
 [tools.vale."platforms.macos-x64-baseline"]
-checksum = "sha256:e27097e84a812d45546de8d6a4ffa75538cab39c96f79b153b601240f8cefaf9"
+checksum = "sha256:df42b317be6ece6a6a70d06b952deec581d047046eb93ea4632f58da56a86ff9"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_macOS_64-bit.tar.gz"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037025"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_macOS_64-bit.tar.gz"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681994"
 
 [tools.vale."platforms.windows-x64"]
-checksum = "sha256:5f4b5cefee5d0f7ee0621d7cc035886515888fd732c4e8add36d3c922f2adc68"
+checksum = "sha256:c42f4b413aa29b6b36fa4e3ac0c18322588a54ac860db4c84b8255997f7d1ec2"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_Windows_64-bit.zip"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037103"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_Windows_64-bit.zip"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681931"
 
 [tools.vale."platforms.windows-x64-baseline"]
-checksum = "sha256:5f4b5cefee5d0f7ee0621d7cc035886515888fd732c4e8add36d3c922f2adc68"
+checksum = "sha256:c42f4b413aa29b6b36fa4e3ac0c18322588a54ac860db4c84b8255997f7d1ec2"
 checksum_source = "mise-versions"
-url = "https://github.com/vale-cli/vale/releases/download/v3.25.1/vale_3.25.1_Windows_64-bit.zip"
-url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/667037103"
+url = "https://github.com/vale-cli/vale/releases/download/v3.26.0/vale_3.26.0_Windows_64-bit.zip"
+url_api = "https://api.github.com/repos/vale-cli/vale/releases/assets/695681931"
 
 [[tools.zizmor]]
 version = "1.31.1"
