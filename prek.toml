@@ -50,7 +50,7 @@ hooks = [
     # The two plugins, then their full transitive tree (see the header).
     additional_dependencies = [
       "mdformat-gfm==1.0.0",
-      "mdformat-frontmatter==2.1.2",
+      "mdformat-frontmatter==2.2.0",
       "markdown-it-py==4.2.0",
       "mdit-py-plugins==0.6.1",
       "mdurl==0.1.2",
