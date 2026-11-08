@@ -39,8 +39,10 @@ jobs:
           # the extracted linux-x64 binary (`mise/bin/mise` inside the
           # release tarball), not the tarball. Renovate bumps `version` and
           # `sha256` together; `min_version` in .mise.toml is a floor that
-          # it leaves alone, so it may lag this pin.
-          version: 2026.10.25
+          # it leaves alone, so it may lag this pin. Keep the `v`: it is
+          # mise's release tag, which Renovate looks up to re-hash `sha256`
+          # (mise-action strips it).
+          version: v2026.10.25
           sha256: 5d362ecc578dc7c146679b841dda949d6472cbf86ff5635db7afdca1b6b3fd87
           install: true
           cache: true
@@ -99,7 +101,7 @@ jobs:
         uses: jdx/mise-action@6612f0ef07ed2a736cd1e00a94a065522dd41195 # v5.2.5
         with:
           # Pinned like the `build` job; see the comment there.
-          version: 2026.10.25
+          version: v2026.10.25
           sha256: 5d362ecc578dc7c146679b841dda949d6472cbf86ff5635db7afdca1b6b3fd87
           # `bun audit` needs only bun (mise adds --locked itself).
           install_args: bun
