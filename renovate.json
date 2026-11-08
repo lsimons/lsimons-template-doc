@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["local>lsimons/.github:renovate-config"],
+  "packageRules": [
+    {
+      "description": "Ported from dependabot.yml's `astro` group: astro and @astrojs/* majors move together, because the @astrojs packages track astro's major. Non-major updates are already in the preset's single group.",
+      "matchPackageNames": ["astro", "@astrojs/**"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "astro major"
+    },
+    {
+      "description": "site/package.json `overrides` are hand-maintained advisory fixes for transitive packages, kept inside the range their parents ask for (katex is the documented exception) and dropped once the parents move past them; see AGENTS.md. Renovate would bump them past that range (for example js-yaml 4 -> 5), so leave them alone.",
+      "matchManagers": ["bun"],
+      "matchDepTypes": ["overrides"],
+      "enabled": false
+    }
+  ]
+}

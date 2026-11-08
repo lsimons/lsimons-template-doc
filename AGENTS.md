@@ -27,7 +27,7 @@ and `mise install` once per clone.
 | `mise run prose-sync`          | Fetch the pinned Vale style packages (network)                            |
 | `mise run ci`                  | Full gate: install + lint + spell + prose + check + build                 |
 | `mise run links`               | `lychee` broken-link check (network; not part of `ci`)                    |
-| `mise run audit`               | `zizmor` audit of workflows + Dependabot config                           |
+| `mise run audit`               | `zizmor` audit of workflows and actions                                   |
 | `mise run site-audit`          | `bun audit` of the site dependency tree (network; own CI job)             |
 | `mise run site-slides`         | Render the example `.qmd` deck to HTML + PDF                              |
 | `mise run site-favicon`        | Regenerate the favicon + apple-touch-icon                                 |
@@ -138,31 +138,35 @@ below after the fact. Write so that it has nothing to say.
   when deliberately changing dependencies, and commit the result.
 - Dependencies in `site/package.json` are exact-pinned (bare `x.y.z`, no
   `^` or `~`), the same as every `.mise.toml` tool. `bun.lock` pins the
-  transitive graph. Dependabot bumps the exact pin.
+  transitive graph. Renovate bumps the exact pin.
 - `mise run site-audit` (`bun audit`) must be clean. CI runs it as its
   own `site-audit` job. It is not in `mise run ci` because it is a network
   call, like `links`, so run it locally before pushing a dependency change.
 - Fix an advisory in a *transitive* package with the `overrides` block in
-  `site/package.json`, because neither `bun update` nor Dependabot lifts a
-  nested resolution. Keep each entry inside the range its parents already
-  ask for where a fixed release exists there, and drop it once their own
-  releases move past it. The one exception is `katex`: no fixed 0.16.x
+  `site/package.json`, because `bun update` does not lift a nested
+  resolution. Renovate leaves these entries alone (`renovate.json`
+  disables it for `overrides`), so they are maintained by hand. Keep each
+  entry inside the range its parents already ask for where a fixed release
+  exists there, and drop it once their own releases move past it. The one exception is `katex`: no fixed 0.16.x
   exists, so the override goes to 0.18.x although
   `micromark-extension-math` asks for `^0.16.0`. markdownlint only uses
   the math syntax extension and never calls `katex` to render, and lint
   passes.
 - Pin GitHub Actions to full-length commit SHAs; `zizmor` enforces it.
-- Every `.mise.toml` tool is exact-pinned and invisible to Dependabot;
-  refresh with `mise up` and read the diff. mise itself is pinned too:
-  `min_version` in `.mise.toml` and the `version` + `sha256` inputs of
-  `jdx/mise-action` in both workflows name the same release. Bump them
-  together; the sha256 is of the extracted linux-x64 binary.
+- Every `.mise.toml` tool is exact-pinned, and Renovate keeps the pins and
+  `mise.lock` current. mise itself is pinned too: the `version` + `sha256`
+  inputs of `jdx/mise-action` in both workflows, which Renovate also bumps
+  (the sha256 is of the extracted linux-x64 binary). `min_version` in
+  `.mise.toml` is a floor Renovate does not touch; raise it by hand.
 - `prek.toml` hook repos are pinned by commit SHA (tag in the comment),
   and each Python hook lists its full transitive tree in
-  `additional_dependencies`, exact-pinned. Node lint tools
-  (markdownlint-cli2, commitlint, cspell) are devDependencies in
-  `site/package.json`, so `bun.lock` pins their trees and Dependabot moves
-  them. Do not add a hook that resolves packages at install time.
+  `additional_dependencies`, exact-pinned. Renovate updates neither: the
+  shared preset's `prek.toml` manager reads tag revs, not SHAs, so refresh
+  the SHA, its tag comment and the `additional_dependencies` by hand.
+  Node lint tools (markdownlint-cli2, commitlint, cspell) are
+  devDependencies in `site/package.json`, so `bun.lock` pins their trees
+  and Renovate moves them. Do not add a hook that resolves packages at
+  install time.
 - Never allow-list a `Bash(mise run <task> *)` rule in
   `.claude/settings.json` for a task whose argument reaches a shell as
   text. Task arguments are declared with `usage` and read as `$usage_*`

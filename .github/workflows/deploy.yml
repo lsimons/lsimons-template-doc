@@ -34,8 +34,9 @@ jobs:
           # checksums and minimum_release_age are enforced by this binary,
           # so an unpinned "latest" here would undo them. The action hashes
           # the extracted linux-x64 binary (`mise/bin/mise` inside the
-          # release tarball), not the tarball. Must match `min_version` in
-          # .mise.toml; bump the three together.
+          # release tarball), not the tarball. Renovate bumps `version` and
+          # `sha256` together; `min_version` in .mise.toml is a floor that
+          # it leaves alone, so it may lag this pin.
           version: 2026.10.25
           sha256: 5d362ecc578dc7c146679b841dda949d6472cbf86ff5635db7afdca1b6b3fd87
           # This job only builds the site, so install only bun (mise adds

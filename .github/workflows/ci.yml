@@ -37,8 +37,9 @@ jobs:
           # checksums and minimum_release_age are enforced by this binary,
           # so an unpinned "latest" here would undo them. The action hashes
           # the extracted linux-x64 binary (`mise/bin/mise` inside the
-          # release tarball), not the tarball. Must match `min_version` in
-          # .mise.toml; bump the three together.
+          # release tarball), not the tarball. Renovate bumps `version` and
+          # `sha256` together; `min_version` in .mise.toml is a floor that
+          # it leaves alone, so it may lag this pin.
           version: 2026.10.25
           sha256: 5d362ecc578dc7c146679b841dda949d6472cbf86ff5635db7afdca1b6b3fd87
           install: true
@@ -97,8 +98,7 @@ jobs:
       - name: Set up mise
         uses: jdx/mise-action@6612f0ef07ed2a736cd1e00a94a065522dd41195 # v5.2.5
         with:
-          # Pinned like the `build` job; see the comment there. Must match
-          # `min_version` in .mise.toml; bump the three together.
+          # Pinned like the `build` job; see the comment there.
           version: 2026.10.25
           sha256: 5d362ecc578dc7c146679b841dda949d6472cbf86ff5635db7afdca1b6b3fd87
           # `bun audit` needs only bun (mise adds --locked itself).
@@ -142,9 +142,11 @@ jobs:
           # Pin the version: the action's default is "latest", so a zizmor
           # release could turn CI red on its own. Keep in step with
           # `zizmor` in .mise.toml, which is what `mise run audit` uses.
+          # Renovate bumps both with the same 7-day wait, so they land in
+          # the same PR.
           version: "1.31.1"
           # `collect` is deliberately unset. The action's default already
-          # covers workflows, composite actions, .github/dependabot.yml and
+          # covers workflows, composite actions, a dependabot config and
           # .pre-commit-config.yaml, while honouring .gitignore. Do not set
           # `collect: all` — that means "and stop honouring .gitignore",
           # which sweeps in every vendored workflow under site/node_modules

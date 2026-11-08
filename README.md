@@ -34,8 +34,8 @@ under <https://lsimons.github.io/>.
    you; without it `deploy.yml` has nowhere to publish.
 
 5. Run `/setup` in your agent of choice. Repository settings (issue labels,
-   private vulnerability reporting, Dependabot security updates) are GitHub
-   state rather than files, so `Use this template` does not copy them and
+   private vulnerability reporting, Dependabot alerts, which Renovate reads)
+   are GitHub state rather than files, so `Use this template` does not copy them and
    nothing in this repo can create them. `/setup` configures them against the
    new repo directly.
 
@@ -54,7 +54,7 @@ under <https://lsimons.github.io/>.
   runs `bun audit` over the site dependencies as a separate job; `deploy.yml`
   publishes to GitHub Pages on push to `main`. Actions are pinned to
   full-length commit SHAs, and a [zizmor](https://docs.zizmor.sh/) job audits
-  the workflows and the Dependabot config.
+  the workflows and actions.
 - **Pinned toolchain and tasks** in `.mise.toml`. Every tool is pinned to an
   exact version, and every repo task lives there (run with `mise run <task>`).
 - **Git hooks** (`prek.toml`) - mdformat, markdownlint, lychee, gitleaks, and
@@ -63,8 +63,11 @@ under <https://lsimons.github.io/>.
   pin their whole dependency tree, and the Node tools (markdownlint-cli2,
   commitlint, cspell) come from the bun-locked `site/package.json`, so
   nothing a hook runs is resolved at install time.
-- **Dependabot** for `bun` (the site deps) and `github-actions`, weekly, with a
-  7-day cooldown.
+- **Renovate** (`renovate.json`) for the site deps (`bun`), GitHub Actions
+  and the `.mise.toml` tools, via the shared preset in
+  [lsimons/.github](https://github.com/lsimons/.github):
+  grouped non-major PRs, a 7-day wait on new releases, and automerge once CI
+  passes.
 - **`.editorconfig`** so editors that are not running the hooks still agree
   with them.
 
@@ -84,7 +87,7 @@ mise run spell           # cspell (American English) over Markdown, MDX and Quar
 mise run prose           # vale prose lint over Markdown and MDX (after `mise run prose-sync` once)
 mise run ci              # full gate: install + lint + spell + prose + check + build
 mise run links           # lychee broken-link check (network; not in `ci`)
-mise run audit           # zizmor audit of workflows + dependabot config
+mise run audit           # zizmor audit of workflows and actions
 mise run site-audit      # bun audit of the site dependency tree (network; not in `ci`)
 mise run ci-watch        # watch GitHub Actions for the current branch
 ```
@@ -100,12 +103,12 @@ Content lives in `site/src/content/docs/`; static assets and slide decks in
 lsimons-template-doc/
 ├── .github/workflows/ci.yml      # lint + Astro check + build, bun audit, and the zizmor audit
 ├── .github/workflows/deploy.yml  # build and publish to GitHub Pages
-├── .github/dependabot.yml        # weekly bun + github-actions updates
 ├── .claude/settings.json         # shared agent permissions (tracked on purpose)
 ├── .editorconfig                 # editor defaults
 ├── .gitignore
 ├── .mise.toml                    # toolchain pins + every repo task
 ├── prek.toml                     # git hooks, also run by `mise run lint`
+├── renovate.json                 # dependency updates (shared lsimons/.github preset)
 ├── .markdownlint-cli2.jsonc      # markdownlint rules
 ├── .mdformat.toml                # Markdown formatter settings
 ├── .lychee.toml                  # link-checker settings

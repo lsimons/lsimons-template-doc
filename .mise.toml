@@ -3,10 +3,12 @@
 # `mise install` installs everything under [tools]; `mise run <task>` runs
 # the tasks below. `mise run ci` is the full gate.
 
-# The lowest mise that may run this file. CI pins the same version (with
-# its sha256) in `jdx/mise-action`'s inputs: mise is the binary that
-# enforces mise.lock and minimum_release_age, so it is pinned like
-# everything it installs. Bump the three together.
+# The lowest mise that may run this file. CI pins mise exactly (with its
+# sha256) in `jdx/mise-action`'s inputs: mise is the binary that enforces
+# mise.lock and minimum_release_age, so it is pinned like everything it
+# installs. Renovate bumps those `version` + `sha256` inputs, but not this
+# line. It is a floor, so it may lag the CI pin; raise it by hand when the
+# repo starts relying on a newer mise.
 min_version = "2026.10.25"
 
 [settings]
@@ -20,8 +22,10 @@ lockfile = true
 # per-dependency judgement about which upstreams are trustworthy enough to
 # float.
 #
-# The cost is that nothing here is covered by dependabot, so these go stale
-# silently. Refresh them deliberately with `mise up`, and read the diff.
+# Renovate's `mise` manager keeps these pins and mise.lock current, after
+# its 7-day minimumReleaseAge and through the same CI gate as every other
+# dependency. `mise up` still works for a deliberate out-of-band bump; read
+# the diff.
 [tools]
 bun = "1.4.4"
 gitleaks = "8.30.1"
@@ -29,7 +33,8 @@ lychee = "0.24.2"
 prek = "0.5.9"
 "aqua:quarto-dev/quarto-cli" = "1.11.9"
 # Used by `mise run audit`; must match `version:` in the workflow's zizmor
-# job. Bump them together.
+# job. Renovate bumps both with the same 7-day wait (the preset looks the
+# input up on zizmor's GitHub releases), so they land in the same PR.
 zizmor = "1.31.1"
 # Used by `mise run lint`. actionlint shells out to shellcheck for the
 # `run:` blocks in workflows, and silently skips that half if shellcheck is
@@ -227,7 +232,7 @@ run = [
 # weaker check than the name promises.
 #
 # There is deliberately no `--collect` here. zizmor's default already
-# collects every kind of input — workflows, composite actions, the
+# collects every kind of input — workflows, composite actions, a
 # dependabot config and `.pre-commit-config.yaml` — while honouring
 # .gitignore. (The one-line summary in `--help` says "workflows and
 # composite actions"; that sentence is stale and the enum below it is what
@@ -241,7 +246,7 @@ run = [
 # strictly narrower than the default and silently drops pre-commit
 # coverage. Omitting the flag is both simpler and broader.
 [tasks.audit]
-description = "zizmor audit of workflows, actions and the dependabot config"
+description = "zizmor audit of workflows and actions"
 run = """
 set -e
 GH_TOKEN=$(gh auth token 2>/dev/null) || true
