@@ -28,7 +28,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up mise
-        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        uses: jdx/mise-action@236a21c3b91f5db6d4e174b348674a0f0caac06d # v5.2.9
         with:
           # Pin mise itself, not only what it installs: the mise.lock
           # checksums and minimum_release_age are enforced by this binary,
@@ -39,8 +39,8 @@ jobs:
           # it leaves alone, so it may lag this pin. Keep the `v`: it is
           # mise's release tag, which Renovate looks up to re-hash `sha256`
           # (mise-action strips it).
-          version: v2026.11.5
-          sha256: 7a5b051d6f17d335c502f8047a5175cf3103f347d91942771c60da4e302ebcb0
+          version: v2026.11.8
+          sha256: 32b6abe844efa43d37d7ac4ed21d2ec41e9479d66feb19b0db8d2c548cd6e36d
           # This job only builds the site, so install only bun (mise adds
           # --locked itself). The lint tools are not needed on the runner
           # that produces the Pages artifact.
